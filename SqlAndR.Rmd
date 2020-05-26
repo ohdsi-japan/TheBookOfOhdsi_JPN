@@ -1,4 +1,4 @@
-# SQL and R {#SqlAndR}
+# SQL과 R {#SqlAndR}
 
 *Chapter leads: Martijn Schuemie & Peter Rijnbeek*
 
@@ -7,59 +7,58 @@ require(SqlRender)
 require(DatabaseConnector)
 ```
 
-The Common Data Model (CDM) is a relational database model (all data is represented as records in tables that have fields), which means that the data will typically be stored in a relational database using a software platform like PostgreSQL, Oracle, or Microsoft SQL Server. The various OHDSI tools such as ATLAS and the Methods Library work by querying the database behind the scene, but we can also query the database directly ourselves if we have appropriate access rights. The main reason to do this is to perform analyses that currently are not supported by any existing tool. However, directly querying the database also comes with greater risk of making mistakes, as the OHDSI tools are often designed to help guide the user to appropriate analysis of the data. Direct queries do not provide such guidance.
-
-The standard language for querying relational databases is SQL (Structured Query Language), which can be used both to query the database as well as to make changes to the data. Although the basic commands in SQL are indeed standard, meaning the same across software platforms, each platform has its own dialect, with subtle changes. For example, to retrieve the top 10 rows of the PERSON table on SQL Server, one would type: \index{SQL} \index{structured query language|see {SQL}}
+共通のデータモデル（Common Data Model、CDM）は、すべてのデータがフィールドがあるテーブルのレコードに表示されるリレーショナルデータベースモデルである。 これは一般的にPostgreSQL、Oracle、Microsoft SQL Serverなどのソフトウェアプラットフォームを使用して、データがリレーショナルデータベースに保存されることを意味する。 ユーザーはATLASとMethods LibraryなどのさまざまなOHDSIツールを介してデータベースに間接的に質の分析を行うが、適切なアクセス権があれば、これらのツールを使用せずに直接データベースに照会することもできる。 データベースに直接クエリする主な理由は、現在の既存のツールがサポートしていない分析を実行することである。 しかしOHDSIツールは、ユーザーがデータを適切に分析を行うことができるよう（専門家が、長い時間を考慮して作成された）の指示を案内するように設計されているので、直接データベースにクエリするのは間違いを犯す危険性がより大きくなる。 直接クエリすることはそのようガイダンスを提供していない。
+ リレーショナル・データベースに照会するための標準言語はStructured Query Language（SQL）であり、これは、データの変更だけでなく、データベースのクエリのために使用することができる。  SQLの基本的なコマンドは、実際に標準であり、ソフトウェア・プラットフォーム全体で同じ意味を持つが、プラットフォームごとに微妙な変更があるユニークな文法を持っている。 例えば、SQL ServerのPERSONテーブルから上位10個の行を検索するには、次のように入力する: \index{SQL} \index{structured query language|see {SQL}}
 
 ```{sql,eval=FALSE}
 SELECT TOP 10 * FROM person;
 ```
 
-Whereas the same query on PostgreSQL would be:
+PostgreSQL의 동일한 질의는 다음과 같다:
 
 ```{sql,eval=FALSE}
 SELECT * FROM person LIMIT 10;
 ```
 
-In OHDSI, we would like to be agnostic to the specific dialect a platform uses; we would like to 'speak' the same SQL language across all OHDSI databases. For this reason OHDSI developed the [SqlRender](https://ohdsi.github.io/SqlRender/) package, an R package that can translate from one standard dialect to any of the supported dialects that will be discussed later in this chapter. This standard dialect - **OHDSI SQL** - is mainly a subset of the SQL Server SQL dialect. The example SQL statements provided throughout this chapter will all use OHDSI SQL. \index{SqlRender} \index{agnostic SQL|see {SqlRender}} \index{Standard SQL Dialect|see {SqlRender}} \index{OHDSI SQL|see {SqlRender}}
+OHDSIでは、プラットフォームが使用する固有の文法にこだわらず、すべてのOHDSIデータベースで同じSQL言語を使用したい。 これらの理由から、OHDSIは、この章の後ろ議論することになる、1つの標準構文を他の複数の文法に翻訳してくれることができるパッケージである[SqlRender]（https://ohdsi.github.io/SqlRender/）を開発した。 この標準言語- **OHDSI SQL** - は主に SQL Server SQL 言語のサブセットである。この章で提供される SQL ステートメントは、すべて OHDSI SQL を使用する。\index{SqlRender} \index{agnostic SQL|see {SqlRender}} \index{Standard SQL Dialect|see {SqlRender}} \index{OHDSI SQL|see {SqlRender}}
 
-Each database platform also comes with its own software tools for querying the database using SQL. In OHDSI we developed the [DatabaseConnector](https://ohdsi.github.io/DatabaseConnector/) package, one R package that can connect to many database platforms. DatabaseConnector will also be discussed later in this chapter. \index{DatabaseConnector}
+各データベースプラットフォームには、SQL を使用してデータベースをクエリするための独自のソフトウェアツールが提供される。OHDSI は複数のデータベースプラットフォームに接続することができる1つの R パッケージです。[DatabaseConnector](https://ohdsi.github.io/DatabaseConnector/) を開発しました。DatabaseConnector もこの章で議論することである。\index{DatabaseConnector}
 
-So although one can query a database that conforms to the CDM without using any OHDSI tools, the recommended path is to use the DatabaseConnector and SqlRender packages. This allows queries that are developed at one site to be used at any other site without modification. R itself also immediately provides features to further analyze the data extracted from the database, such as performing statistical analyses and generating (interactive) plots. \index{R} 
+したがってOHDSIツールを使用していなくても、CDMに合わせて照会することができますがDatabaseConnectorとSqlRenderパッケージを使用することをお勧めします。 これにより、あるサイトで開発されたクエリを修正しなくても、他のサイトで使用することができる。  R自体は、統計分析やインタラクティブなグラフ作成のように、データベースから抽出されたデータをさらに分析する機能も直接提供する。\index{R} 
 
-In this chapter we assume the reader has a basic understanding of SQL. We first review how to use SqlRender and DatabaseConnector. If the reader does not intend to use these packages these sections can be skipped. In Section \@ref(QueryTheCdm) we discuss how to use SQL (in this case OHDSI SQL) to query the CDM. The following section highlights how to use the OHDSI Standardized Vocabulary when querying the CDM. We highlight the QueryLibrary, a collection of commonly-used queries against the CDM that is publicly available. We close this chapter with an example study estimating incidence rates, and implement this study using SqlRender and DatabaseConnector. \index{Query Library} \index{SQL Query Libary|see {Query Library}}
+この章では、読者が SQL の基本的な知識を持っていると仮定する。、SqlRender および DatabaseConnector の使用方法を検討する。読者は、このパッケージを使用する意図がない場合はスキップすることができる。 \@ref(QueryTheCdm)セクションでは、SQL (OHDSI SQL) を使用して、CDM に照会する方法について説明する。彼の次のセクションでは、CDM にクエリするときに OHDSI 標準的な用語を使用する方法を強調する。公に利用可能な CDM について一般的に使用されるのである QueryLibrary を特に詳しく見てみる。発生率を推定するのは例の研究にこの章を終了し、SqlRender および DatabaseConnector を使用してこの研究を具体化する。\index{Query Library} \index{SQL Query Libary|see {Query Library}}
 
 ## SqlRender {#SqlRender}
 
-The [SqlRender](https://ohdsi.github.io/SqlRender/) package is available on CRAN (the Comprehensive R Archive Network), and can therefore be installed using: 
+[SqlRender](https://ohdsi.github.io/SqlRender/) パッケージは Comprehensive R Archive Network (CRAN) で入手可能であるため、下記のものを使用してインストールすることができる: 
 
 ```{r, eval=FALSE}
 install.packages("SqlRender")
 ```
 
-SqlRender supports a wide array of technical platforms including traditional database systems (PostgreSQL, Microsoft SQL Server, SQLite, and Oracle), parallel data warehouses (Microsoft APS, IBM Netezza, and Amazon RedShift), as well as Big Data platforms (Hadoop through Impala, and Google BigQuery). The R package comes with a package manual and a vignette that explores the full functionality. Here we describer some of the main features.
+SqlRenderは従来のデータベースシステム (PostgreSQL では、Microsoft SQL Server し、SQLite、and Oracle)、並列データウェアハウス (Microsoft APS、IBM Netezza, and Amazon RedShift)、ビッグデータのプラットフォーム (Hadoop through Impala, and Google BigQuery) を含むいくつかの技術プラットフォームをサポートする。
 
-### SQL Parameterization
+### SQL のパラメーター化
 
-One of the functions of the package is to support parameterization of SQL. Often, small variations of SQL need to be generated based on some parameters. SqlRender offers a simple markup syntax inside the SQL code to allow parameterization. Rendering the SQL based on parameter values is done using the `render()` function. \index{SqlRender!parameterization}
+パッケージの機能の1つは SQL ステートメントにパラメータをサポートすることである。いくつかのパラメーターに基づいて、SQL ステートメントを断片的に変換する必要がしばしばある。SqlRender パラメーターを許可するために SQL コード内で簡単なマークアップ構文を提供する。パラメーターを基に SQL を表示することは`render()` 関数を使用して実行する。 \index{SqlRender!parameterization}
 
-#### Substituting Parameter Values {-}
+#### パラメーターの値を置換する {-}
 
-The `@` character can be used to indicate parameter names that need to be exchanged for actual parameter values when rendering. In the following example, a variable called `a` is mentioned in the SQL. In the call to the render function the value of this parameter is defined:
+`@` 文字は、表示料金は実際のパラメーター値と交換する必要があるパラメーターの名前を表すために使用できる。次の例 `a`と呼ばれる変数を SQL で述べられている。レンダリング関数を呼び出すときにパラメーターの値が定義される:
 
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT * FROM concept WHERE concept_id = @a;"
 render(sql, a = 123)
 ```
 
-Note that, unlike the parameterization offered by most database management systems, it is just as easy to parameterize table or field names as values:
+ほとんどのデータベース管理システムによって提供されるパラメーターとは異なり、テーブルまたはフィールド名を値としてパラメーター化することが容易であることに注意して下さい:
 
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT * FROM @x WHERE person_id = @a;"
 render(sql, x = "observation", a = 123)
 ```
 
-The parameter values can be numbers, strings, booleans, as well as vectors, which are converted to comma-delimited lists:
+パラメーターの値は数値、文字列、ブール値、および、カンマで項目を分割したリストに変換されるベクトルであることができる:
 
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT * FROM concept WHERE concept_id IN (@a);"
@@ -68,7 +67,7 @@ render(sql, a = c(123, 234, 345))
 
 #### If-Then-Else {-}
 
-Sometimes blocks of codes need to be turned on or off based on the values of one or more parameters. This is done using the `{Condition} ? {if true} : {if false}` syntax. If the *condition* evaluates to true or 1, the *if true* block is used, else the *if false* block is shown (if present).
+時には複数のパラメータの値に基づいてコードブロックをオンまたはオフにする必要があります。 この作業は、 `{Condition} ? {if true} : {if false}`構文を使用します。  *条件*が真または1で評価されると、* if true *ブロックが使用されていない場合、* if false *ブロックが表示される（ある場合）。
 
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT * FROM cohort {@x} ? {WHERE subject_id = 1}"
@@ -76,7 +75,7 @@ render(sql, x = FALSE)
 render(sql, x = TRUE)
 ```
 
-Simple comparisons are also supported:
+単純な比較がサポートされる:
 
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT * FROM cohort {@x == 1} ? {WHERE subject_id = 1};"
@@ -84,33 +83,33 @@ render(sql,x = 1)
 render(sql,x = 2)
 ```
 
-As well as the `IN` operator:
+IN も支えられる:
 
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT * FROM cohort {@x IN (1,2,3)} ? {WHERE subject_id = 1};"
 render(sql,x = 2)
 ```
 
-### Translation to Other SQL Dialects
+### 他の SQL 言語への変換
 
-Another function of the [SqlRender](https://ohdsi.github.io/SqlRender/) package is to translate from OHDSI SQL to other SQL dialects. For example:
+[SqlRender](https://ohdsi.github.io/SqlRender/) パッケージのもう一つの機能は、OHDSI SQL から別の SQL 言語に変換することである。例えば次のよう:
 
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT TOP 10 * FROM person;"
 translate(sql, targetDialect = "postgresql")
 ```
 
-The `targetDialect` parameter can have the following values: "oracle", "postgresql", "pdw", "redshift", "impala", "netezza", "bigquery", "sqlite", and "sql server". \index{SqlRender!translation}
+`targetDialect` パラメーターは次の値を持つことができる: "oracle", "postgresql", "pdw", "redshift", "impala", "netezza", "bigquery", "sqlite", and "sql server". \index{SqlRender!translation}
 
 ```{block2, type='rmdimportant'}
-There are limits to what SQL functions and constructs can be translated properly, both because only a limited set of translation rules have been implemented in the package, but also some SQL features do not have an equivalent in all dialects. This is the primary reason why OHDSI SQL was developed as its own, new SQL dialect. However, whenever possible we have kept to the SQL Server syntax to avoid reinventing the wheel.
+パッケージは、変換ルールのセットを実装するために SQL の機能と構成を適切に翻訳されることには限界があるだけでなく、いくつかの SQL の特徴はすべての言語で同じではない。OHDSI SQL を独自の新しい文法を使って開発された主な理由です。が既に存在することをい、不必要に時間を無駄にしないために SQL Server の構文を維持した。
 ```
 
-Despite our best efforts, there are quite a few things to consider when writing OHDSI SQL that will run without error on all supported platforms. In what follows we discuss these considerations in detail.
+最善の努力にもかかわらず、サポートされるすべてのプラットフォームでは、エラーなしに実行される OHDSI SQL を作成する際の考慮事項がいくつかある。次はこれらの考慮事項について詳しく説明する。
 
-#### Functions and Structures Supported By Translate {-}
+#### 変換によってサポートされる機能および構造{-}
 
-These SQL Server functions have been tested and were found to be translated correctly to the various dialects:\index{SqlRender!supported functions}
+次の SQL Server 関数は、テストされており、さまざまな言語に正しく変換されることが確認された: \index{SqlRender!supported functions}
 
 Table: (\#tab:sqlFunctions) Functions supported by translate.
 
@@ -135,9 +134,9 @@ Table: (\#tab:sqlFunctions) Functions supported by translate.
 |DAY               |PI         |           |
 |EOMONTH           |POWER      |           |
 
-\* Requires special privileges on Oracle. Has no equivalent on SQLite.
+\* Oracleは特別の許可が必要である。SQLite では、対応することがない。
 
-Similarly, many SQL syntax structures are supported. Here is a non-exhaustive list of expressions that we know will translate well:
+同様に多くの SQL 構文がサポートされる。次は私達が最もよく翻訳することができる表現の完全なリストである:
 
 ```sql
 -- Simple selects:
@@ -163,7 +162,7 @@ INSERT INTO other_table (field_1) VALUES (1);
 
 -- Inserting from SELECT:
 INSERT INTO other_table (field_1) SELECT value FROM table;
-  
+
 -- Simple drop commands:
 DROP TABLE table;
 
@@ -195,13 +194,13 @@ SELECT * FROM a INTERSECT SELECT * FROM b;
 SELECT * FROM a EXCEPT SELECT * FROM b;
 ```
 
-#### String Concatenation {-}
+#### 文字列連結 {-}
 
-String concatenation is one area where SQL Server is less specific than other dialects. In SQL Server, one would write `SELECT first_name + ' ' + last_name AS full_name FROM table`, but this should be `SELECT first_name || ' ' || last_name AS full_name FROM table` in PostgreSQL and Oracle. SqlRender tries to guess when values that are being concatenated are strings. In the example above, because we have an explicit string (the space surrounded by single quotation marks), the translation will be correct. However, if the query had been `SELECT first_name + last_name AS full_name FROM table`, SqlRender would have had no clue the two fields were strings, and would incorrectly leave the plus sign. Another clue that a value is a string is an explicit cast to VARCHAR, so `SELECT last_name + CAST(age AS VARCHAR(3)) AS full_name FROM table` would also be translated correctly. To avoid ambiguity altogether, it is probable best to use the ```CONCAT()``` function to concatenate two or more strings.
+文字列は SQL Server が他の言語よりも特定の領域である。SQL Server では、 `SELECT first_name + ' ' + last_name AS full_name FROM table`のような記述が、Postgres と Oracle では、`SELECT first_name || ' ' || last_name AS full_name FROM table` と作成する。SqlRender は、関連付けられている値が文字列であることを仮定しようとする。上記の例では明示的な文字列 (単一引用符で囲まれたスペース) があるため、翻訳は正確である。が`SELECT first_name + last_name AS full_name FROM table`など作成している場合 SqlRender は、2つのフィールド文字列と呼ばれる手がかりはなく、プラス記号を残した。値が文字列と呼ばれるもう一つの手がかりは "VARCHAR"への明示的なキャストなので、`SELECT last_name + CAST(age AS VARCHAR(3)) AS full_name FROM table` も適切に変換される。あいまいさを回避するには```CONCAT()``` 関数を使用して2つ以上の文字列を連結することが最もよいです。
 
-#### Table Aliases and the AS Keyword {-}
+#### テーブルと AS キーワード {-}
 
-Many SQL dialects allow the use of the `AS` keyword when defining a table alias, but will also work fine without the keyword. For example, both these SQL statements are fine for SQL Server, PostgreSQL, RedShift, etc.:
+많은 SQL 言語は、テーブルの別名を定義するときに `AS` キーワードを使用できますが、キーワードなしでも正常に動作する。たとえば、これら2つの SQL ステートメントは、SQL Server、PostgreSQL、RedShift など適切である:
 
 ```sql
 -- Using AS keyword
@@ -221,30 +220,30 @@ INNER JOIN (
 ON table_1.person_id = table_2.person_id;
 ```
 
-However, Oracle will throw an error when the `AS` keyword is used. In the above example, the first query will fail. It is therefore recommended to not use the `AS` keyword when aliasing tables. (Note: we can't make SqlRender handle this, because it can't easily distinguish between table aliases where Oracle doesn't allow `AS` to be used, and field aliases, where Oracle requires `AS` to be used.)
+が Oracle では、 `AS` キーワードを使用するとエラーが発生する。の上述の例の最初のクエリは失敗する。従ってテーブルの別名を指定するときに`AS` キーワードを使用しないほうがいい。(注と Oracle では、`AS`を使用できないテーブルとは `AS`を使用する必要があるフィールドの別名を簡単に区別できないため、SqlRender がこの1つを処理することができない)
 
-#### Temp Tables {-}
+#### 一時テーブル{-}
 
-Temp tables can be very useful to store intermediate results, and when used correctly can dramatically improve performance of queries. On most database platforms temp tables have very nice properties: they're only visible to the current user, are automatically dropped when the session ends, and can be created even when the user has no write access. Unfortunately, in Oracle temp tables are basically permanent tables, with the only difference that the data inside the table is only visible to the current user. This is why, in Oracle, SqlRender will try to emulate temp tables by
+一時テーブルは、中間結果を格納するために非常に有用であることが、正しく使用すると、クエリパフォーマンスが大幅に向上させることがある。ほとんどのデータベースプラットフォームでは、一時テーブルと呼ばれる非常に良い機能を持っている: 現在のユーザーのみに表示され、セッションが終了すると自動的に削除され、ユーザーに書き込みアクセス許可がなくても作り出すことができる。残念なことに、Oracle は、一時テーブルは既定では、永続的なテーブルで、データの内部は現在のユーザーのみが異なっている。これは Oracle では、SqlRender が次のように一時テーブルをエミュレートしようとする理由である.
 
-1. Adding a random string to the table name so tables from different users will not conflict.
-2. Allowing the user to specify the schema where the temp tables will be created. 
+1. テーブル名に任意の文字列を追加して他のユーザーのテーブルが競合しないようにする。
+2. ユーザーは、一時テーブルが作成されるスキーマを指定することを許可する。
 
-For example:
+例えば:
 ```{r tidy=TRUE,echo=TRUE}
 sql <- "SELECT * FROM #children;"
 translate(sql, targetDialect = "oracle", oracleTempSchema = "temp_schema")
 ```
 
-Note that the user will need to have write privileges on `temp_schema`.
+ユーザーは `temp_schema`に対する書き込み権限がなければならない。
 
-Also note that because Oracle has a limit on table names of 30 characters. **Temp table names are only allowed to be at most 22 characters long**, because else the name will become too long after appending the session ID.
+また Oracle はテーブルの名前が30文字に制限されている。セッションのユーザー名を追加した後、名前が余りに長くのために **一時テーブルの名前は最大22文字まで可能になる**。
 
-Furthermore, remember that temp tables are not automatically dropped on Oracle, so you will need to explicitly ```TRUNCATE``` and ```DROP``` all temp tables once you're done with them to prevent orphan tables accumulating in the Oracle temp schema.
+だけでなく、Oracle の一時テーブルは自動的に削除されないので、Oracle の一時テーブルのスキーマが積まれることを防ぐためにすべての一時テーブルを使用した後には明示的に ```TRUNCATE``` と ```DROP```をする必要があります。
 
-#### Implicit Casts {-}
+#### 暗黙のキャスト {-}
 
-One of the few points where SQL Server is less explicit than other dialects is that it allows implicit casts. For example, this code will work on SQL Server:
+SQL Server が他の言語よりも明確ないくつかのポイントの1つは暗黙のキャストを可能にすることである。たとえば、このコードは SQL Server 上で動作する:
 
 ```sql
 CREATE TABLE #temp (txt VARCHAR);
@@ -255,78 +254,77 @@ SELECT '1';
 SELECT * FROM #temp WHERE txt = 1;
 ```
 
-Even though `txt` is a VARCHAR field and we are comparing it with an integer, SQL Server will automatically cast one of the two to the correct type to allow the comparison. In contrast, other dialects such as PostgreSQL will throw an error when trying to compare a VARCHAR with an INT.
+```txt``` は、VARCHAR フィールドであり、これを整数と比較していますが、SQL Server は比較を可能にするために2つのいずれかを自動的に適切なタイプに変換する。対照的に、PostgreSQL のような他の言語は VARCHAR と INT を比較しようとするときにエラーを引き起こすことである。
 
-You should therefore always make casts explicit. In the above example, the last statement should be replaced with either
+この型変換は常に明示的にする必要があります。上記の最後の例は
 
 ```sql
 SELECT * FROM #temp WHERE txt = CAST(1 AS VARCHAR);
 ```
 
-or
+または次のように取り替えられなければならない。
 
 ```sql
 SELECT * FROM #temp WHERE CAST(txt AS INT) = 1;
 ```
 
-#### Case Sensitivity in String Comparisons {-}
+#### 文字列比較で大文字と小文字を区別する {-}
 
-Some DBMS platforms such as SQL Server always perform string comparisons in a case-insensitive way, while others such as PostgreSQL are always case sensitive. It is therefore recommended to always assume case-sensitive comparisons, and to explicitly make comparisons case-insensitive when unsure about the case. For example, instead of 
+SQL Server など、一部の DBMS プラットフォームでは、大文字と小文字を区別しない比較を実行するのに対し、PostgreSQL のような他のプラットフォームでは、大文字と小文字を区別する。常に大文字と小文字を区別しない比較を前提とし、明確にわからない場合は、明示的に大文字と小文字を区別しないようにするコマンドを追加して比較することを推薦する。たとえば、
 
 ```sql
 SELECT * FROM concept WHERE concep_class_id = 'Clinical Finding'
 ```
-it is preferred to use
+の代わりに、次のように使用することが良いです。
 ```sql
 SELECT * FROM concept WHERE LOWER(concep_class_id) = 'clinical finding'
 ```
 
-#### Schemas and Databases {-}
+#### スキーマとデータベース {-}
 
-In SQL Server, tables are located in a schema, and schemas reside in a database. For example, `cdm_data.dbo.person` refers to the `person` table in the `dbo` schema in the `cdm_data` database. In other dialects, even though a similar hierarchy often exists they are used very differently. In SQL Server, there is typically one schema per database (often called `dbo`), and users can easily use data in different databases. On other platforms, for example in PostgreSQL, it is not possible to use data across databases in a single session, but there are often many schemas in a database. In PostgreSQL one could say that the equivalent of SQL Server's database is the schema.
+SQL Server のテーブルは、スキーマ内に、スキーマはデータベース内にある。例えば、`cdm_data.dbo.person` は `cdm_data` の `dbo` のスキーマ内にある `person` テーブルを言う。他言語でのような階層構造がしばしば存在するが非常に別様に使用される。SQL Server には、通常、データベースごとに1つのスキーマ (`dbo` と呼ばれる)、があり、ユーザーは他のデータベースのデータを簡単に使用できる。Postgres のような他のプラットフォームでは、単一のセッションでは、データベース間でデータを使用できません。ただし、データベース内には多くのスキーマを持っている。SQL Server のデータベースは、PostgreSQL では、スキーマと呼ばれることがある。
 
-We therefore recommend concatenating SQL Server's database and schema into a single parameter, which we typically call `@databaseSchema`. For example, we could have the parameterized SQL
+したがって SQL Server のデータベースおよびスキーマを単一のパラメーターとして接続することを推奨する。このパラメーターは通常は `@databaseSchema`とする。例えば私達は、パラメータ化された SQL を持つことができる。
 ```sql
 SELECT * FROM @databaseSchema.person
 ```
-where on SQL Server we can include both database and schema names in the value: `databaseSchema = "cdm_data.dbo"`. On other platforms, we can use the same code, but now only specify the schema as the parameter value: `databaseSchema = "cdm_data"`.
+SQL Server から `databaseSchema = "cdm_data.dbo"`値、データベースとスキーマ名を含めることができる。他のプラットフォームで同じコードを使用できますが、スキーマのパラメーターの値は次の通り示す: `databaseSchema = "cdm_data"`
 
-The one situation where this will fail is the `USE` command, since `USE cdm_data.dbo;` will throw an error. It is therefore preferred not to use the `USE` command, but always specify the database / schema where a table is located. 
+これが失敗するは1つの状態はエラーを発生させる`USE cdm_data.dbo;`, つまり `USE` コマンドを使用したためである。に沿って `USE` コマンドを使用せず、常にテーブルを含むデータベースおよびスキーマを指定することが望ましい。
 
+#### パラメータ化された SQL をデバッグする {-}
 
-#### Debugging Parameterized SQL {-}
+パラメータ化された SQL をデバッグすることは幾分複雑であることができる。表示された SQL データベースサーバーをテストすることができますが、パラメーター化された (事前レンダリングされた) SQL コードを変更する必要があります。\index{SqlRender!debugging}
 
-Debugging parameterized SQL can be a bit complicated. Only the rendered SQL can be tested against a database server, but changes to the code should be made in the parameterized (pre-rendered) SQL. \index{SqlRender!debugging}
-
-A Shiny app is included in the SqlRender package for interactively editing source SQL and generating rendered and translated SQL. The app can be started using:
+SqlRender パッケージには、対話的に SQL ソースを編集して SQL を랜더링을、またはその逆変換することができるシャイアプリが含まれています。このアプリは次の通り始まる:
 
 ```{r tidy=TRUE,eval=FALSE}
 launchSqlRenderDeveloper()
 ```
 
-That will open the default browser with the app shown in Figure \@ref(fig:sqlDeveloper). The app is also publicly available on the web.[^sqlDeveloperUrl] 
+図 \@ref(fig:sqlDeveloper)に表示されたアプリを既定のブラウザーが開かれる。このアプリはウェブ上でも公開することがある.[^sqlDeveloperUrl] 
 
-```{r sqlDeveloper, fig.cap='The SqlDeveloper Shiny app.',echo=FALSE, out.width='100%', fig.align='center'}
+```{r sqlDeveloper, fig.cap='The SqlDeveloper Shiny 앱.',echo=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("images/SqlAndR/sqlDeveloper.png")
 ```
 
-In the app you can enter OHDSI SQL, select the target dialect as well as provide values for the parameters that appear in your SQL, and the translation will automatically appear at the bottom.
+アプリで OHDSI SQL を入力し、ターゲット言語を選択し、SQL のパラメーター値を指定すると、自動的に翻訳されている SQL が下部に表示される。
 
 [^sqlDeveloperUrl]: http://data.ohdsi.org/SqlDeveloper/
 
 ## DatabaseConnector {#DatabaseConnector}
 
-[DatabaseConnector](https://ohdsi.github.io/DatabaseConnector/) is an R package for connecting to various database platforms using Java's JDBC drivers. The DatabaseConnector package is available on CRAN (the Comprehensive R Archive Network), and can therefore be installed using:
+[DatabaseConnector](https://ohdsi.github.io/DatabaseConnector/) は、Java の JDBC ドライバーを使用してさまざまなデータベースプラットフォームに接続するための R パッケージです。DatabaseConnector パッケージは CRAN (広範囲 R のアーカイブネットワーク) で使用できるよう下記のものを使用してインストールすることができる:
 
 ```{r, eval=FALSE}
 install.packages("DatabaseConnector")
 ```
 
-DatabaseConnector supports a wide array of technical platforms including traditional database systems (PostgreSQL, Microsoft SQL Server, SQLite, and Oracle), parallel data warehouses (Microsoft APS, IBM Netezza, and Amazon RedShift), as well as Big Data platforms (Hadoop through Impala, and Google BigQuery). The package already contains most drivers, but because of licensing reasons the drivers for BigQuery, Netezza and Impala are not included but must be obtained by the user. Type `?jdbcDrivers` for instructions on how to download these drivers. Once downloaded, you can use the `pathToDriver` argument of the `connect`, `dbConnect`, and `createConnectionDetails` functions.
+DatabaseConnector は既存のデータベースシステム (PostgreSQL では、Microsoft SQL Server し、SQLite および Oracle)、並列データ倉庫 (Microsoft APS、IBM Netezza および Amazon RedShift) およびビッグデータのプラットフォーム (Hadoop through Impla と Google BigQuery) を含むさまざまな技術プラットフォームをサポートする。パッケージには既にほとんどのドライバーが含まれていますが、ライセンス問題のために BigQuery、Netezza および Impla のドライバーは含まれていないため、ユーザーが入手する。これらのドライバーをダウンロードする方法に関するガイダンスを表示するには `?jdbcDrivers` を入力する。ダウンロードした後 `connect`、`dbConnect` and `createConnectionDetails` 関数 `pathToDriver` の引数として使用することがある。
 
-### Creating a Connection
+###接続を作成する
 
-To connect to a database a number of details need to be specified, such as the database platform, the location of the server, the user name, and password. We can call the `connect` function and specify these details directly: \index{DatabaseConnector!creating a connection}
+データベースに接続するには、データベースプラットフォームは、サーバーの場所、ユーザー名およびパスワードなどの多くの細部を指定する必要があります。`connect` 関数を呼び出して、次の細部を直接指定することがある: \index{DatabaseConnector!creating a connection}
 
 ```{r eval=FALSE}
 conn <- connect(dbms = "postgresql",
@@ -339,13 +337,13 @@ conn <- connect(dbms = "postgresql",
 writeLines("Connecting using PostgreSQL driver")
 ```
 
-See `?connect` for information on which details are required for each platform. Don't forget to close any connection afterwards:
+各プラットフォームに必要な詳細事項については `?connect` を参照して下さい。後でタスクを完了し、接続を解除することを忘れてはいけない:
 
 ```{r eval=FALSE}
 disconnect(conn)
 ```  
 
-Note that, instead of providing the server name, it is also possible to provide the JDBC connection string if this is more convenient:
+サーバー名を指定する代わりに、JDBC connecting string を使用する方が便利な場合を提供することもあることに注意して下さい:
 
 ```{r eval=FALSE}
 connString <- "jdbc:postgresql://localhost:5432/postgres"
@@ -359,7 +357,7 @@ conn <- connect(dbms = "postgresql",
 writeLines("Connecting using PostgreSQL driver")
 ```
 
-Sometimes we may want to first specify the connection details, and defer connecting until later. This may be convenient for example when the connection is established inside a function, and the details need to be passed as an argument. We can use the `createConnectionDetails` function for this purpose:
+時々先に詳細を指定し、後で接続するまで延期する必要がある。たとえば、関数内で接続が確立され、細部は引数として渡す必要がある場合に便利な場合がある。この目的のために `createConnectionDetails` 関数を使用することができる:
 
 ```{r eval=FALSE}
 details <- createConnectionDetails(dbms = "postgresql",
@@ -373,11 +371,11 @@ conn <- connect(details)
 writeLines("Connecting using PostgreSQL driver")
 ```
 
-### Querying
+### 質疑する
 
-The main functions for querying database are the `querySql` and `executeSql` functions. The difference between these functions is that `querySql` expects data to be returned by the database, and can handle only one SQL statement at a time. In contrast, `executeSql` does not expect data to be returned, and accepts multiple SQL statements in a single SQL string. \index{DatabaseConnector!querying}
+データベースの質のための主要な関数は `querySql`と `executeSql` である。これらの関数の違いは`querySql`はデータベースがデータを返すことを期待し、一度に1つの SQL ステートメントを処理できることである。対照的に`executeSql`はデータを返すことを期待しなかったし、1つの SQL 文字列で複数の SQL ステートメントを収容する。\index{DatabaseConnector!querying}
 
-Some examples:
+いくつかの例:
 
 ```{r eval=FALSE}
 querySql(conn, "SELECT TOP 3 * FROM person")
@@ -390,47 +388,44 @@ data.frame(person_id = c(1,2,3), gender_concept_id = c(8507, 8507, 8507), year_o
 executeSql(conn, "TRUNCATE TABLE foo; DROP TABLE foo;")
 ```
 
-Both functions provide extensive error reporting: When an error is thrown by the server, the error message and the offending piece of SQL are written to a text file to allow better debugging. The `executeSql` function also by default shows a progress bar, indicating the percentage of SQL statements that has been executed. If those attributes are not desired, the package also offers the `lowLevelQuerySql` and `lowLevelExecuteSql` functions.
+両方の機能は、広範なエラー報告機能を提供する: サーバーでエラーが発生した場合、エラーメッセージと問題のある SQL 部分がテキストファイルに書き込まれ、よりよいデバッグを助ける。既定では、`executeSql` 関数が実行された SQL ステートメントの割合を示す進行状況表示行を示す。これらのプロパティを必要としない場合、パッケージは`lowLevelQuerySql`と`lowLevelExecuteSql` 関数を提供する。
 
-### Querying Using Ffdf Objects
+### ffdf オブジェクトを使用してクエリする
 
-Sometimes the data to be fetched from the database is too large to fit into memory. As mentioned in Section \@ref(BigDataSupport), in such a case we can use the `ff` package to store R data objects on file, and use them as if they are available in memory. `DatabaseConnector` can download data directly into ffdf objects:
+データベースからインポートするデータが大きすぎて、メモリ内に入ることができない場合もある。\@ref(BigDataSupport)節で述べたように、そのような場合 `ff` パッケージを使用して R データオブジェクトをディスクに保存し、メモリ内で使用するように使用することができる. `DatabaseConnector`オブジェクトにデータを直接ダウンロードできる:
 
 ```{r eval=FALSE}
 x <- querySql.ffdf(conn, "SELECT * FROM person")
 ```
 
-x is now an ffdf object. 
+X は ffdf オブジェクトである。
 
-### Querying Different Platforms Using the Same SQL
+### のような SQL を使用して他のプラットフォームのために
 
-The following convenience functions are available that first call the `render` and `translate` functions in the SqlRender package: `renderTranslateExecuteSql`, `renderTranslateQuerySql`, `renderTranslateQuerySql.ffdf`. For example:
+SqlRender パッケージの `render` と `translate` 関数を呼び出すには次のような便利な関数を使用することができる: `renderTranslateExecuteSql`, `renderTranslateQuerySql`, `renderTranslateQuerySql.ffdf`. 例えば:
 
 ```{r eval=FALSE}
 x <- renderTranslateQuerySql(conn, 
                              sql = "SELECT TOP 10 * FROM @schema.person",
                              schema = "cdm_synpuf")
 ```
-Note that the SQL Server-specific 'TOP 10' syntax will be translated to for example 'LIMIT 10' on PostgreSQL, and that the SQL parameter `@schema` will be instantiated with the provided value 'cdm_synpuf'.
+SQL Server 関連 ‘TOP 10’ の構文は、PostgreSQL では、たとえば、‘LIMIT 10’に変換され、SQL パラメーター`@schema` は指定された値 ‘cdm_synpuf’としてインスタンス化されることに注意する必要があります。
 
-### Inserting Tables
+### テーブルを挿入する
 
-Although it is also possible to insert data in the database by sending SQL statements using the `executeSql` function, it is often more convenient and faster (due to some optimization) to use the `insertTable` function:
+`executeSql` 関数を使用して SQL ステートメントを送信して、データベースにデータを挿入することもできますが、`insertTable` 関数を使用することがより便利で速い (いくつかの最適化のために):
 
 ```{r eval=FALSE}
 data(mtcars)
 insertTable(conn, "mtcars", mtcars, createTable = TRUE)
 ```
 
+この例では mtcars のデータフレームを自動的にサーバー上の `mtcars` という名前のテーブルにアップロードし、作成する。
 
+## CDM 質疑する {#QueryTheCdm}
 
-In this example, we're uploading the mtcars data frame to a table called 'mtcars' on the server, which will be automatically created.
-
-## Querying the CDM {#QueryTheCdm}
-
-In the following examples we use OHDSI SQL to query a database that adheres to the CDM. These queries use `@cdm` to denote the database schema where the data in CDM can be found.
-
-We can start by just querying how many people are in the database:
+次の例では、CDMが適用されたデータベースに対してクエリを実行するためにOHDSI SQLを使用する。これらのクエリは、CDMのデータを見つけることができるデータベーススキーマを示すために `@cdm` を使用する。
+データベースにどのように多くの人がいるかどうかクエリすることから始めることができる：
 
 ```sql
 SELECT COUNT(*) AS person_count FROM @cdm.person;
@@ -440,7 +435,7 @@ SELECT COUNT(*) AS person_count FROM @cdm.person;
 | 26299001     |
 
 
-Or perhaps we're interested in the average length of an observation period:
+それ以外の場合observation periodの平均に興味がある場合もある：
 
 ```sql
 SELECT AVG(DATEDIFF(DAY, 
@@ -451,9 +446,7 @@ FROM @cdm.observation_period;
 | NUM_YEARS |     
 | ---------:|
 | 1.980803  |
-
-We can join tables to produce additional statistics. A join combines fields from multiple tables, typically by requiring specific fields in the tables to have the same value. For example, here we join the PERSON table to the OBSERVATION_PERIOD table on the PERSON_ID fields in both tables. In other words, the result of the join is a new table-like set that has all the fields of the two tables, but in all rows the PERSON_ID fields from the two tables must have the same value. We can now for example compute the maximum age at observation end by using the OBSERVATION_PERIOD_END_DATE field from the OBSERVATION_PERIOD table together with the year_of_birth field of the PERSON table:
-
+テーブルを結合して、追加の統計情報を生成することができる。結合は、一般的に、テーブルの特定のフィールドが同じ値を持つようにして、複数のテーブルのフィールドを結合する。例えば、両方のテーブル持っているPERSON_IDフィールドにPERSONテーブルとOBSERVATION_PEROPDテーブルを結合することができる。つまり、結合の結果は、両方のテーブルのすべてのフィールドを持つ新しいテーブルのような一連のであるが、すべての行で、両方のテーブルのPERSON_IDは同じ値を持たなければならない。例えば、PERSONテーブルのYEAR_OF_BIRTHフィールドとOBSERVATION_PERIODテーブルのOBSERVATION_PERIOD_END_DATEフィールドを使用して観察終了時の患者の最高年齢を計算することができる：
 ```sql
 SELECT MAX(YEAR(observation_period_end_date) -
            year_of_birth) AS max_age
@@ -465,7 +458,7 @@ INNER JOIN @cdm.observation_period
 | -------:|
 |      90 |
 
-A much more complicated query is needed to determine the distribution of age at the start of observation. In this query, we first join the PERSON to the OBSERVATION_PERIOD table to compute age at start of observation. We also compute the ordering for this joined set based on age, and store it as order_nr. Because we want to use the result of this join multiple times, we define it as a common table expression (CTE) (defined using `WITH ... AS`) that we call "ages," meaning we can refer to ages as if it is an existing table. We count the number of rows in ages to produce "n," and then for each quantile find the minimum age where the order_nr is smaller than the fraction times n. For example, to find the median we use the minimum age where $order\_nr < .50 * n$. The minimum and maximum age are computed separately:
+観察開始当時の年齢分布を決定するには、はるかに複雑なクエリが必要である。このクエリでは、まず、PERSONテーブルとOBSERVATION_PERIODを結合して観察当時の年齢を計算する。また、年齢を基準に、この結合されたセットの順序を並べ替えたり、order_nrに保存する。この結合の結果を複数回使用したいので “ages”というcommon table expression (CTE) (`WITH ... AS`を使用して定義された) で定義する。つまり、年齢を既存のテーブルであるかのように示すことができる。 “ages”の行数を数え “n”を作成し、各四分位についてorder_nrが噴水の時間 "n," より小さな最低年齢を探す。たとえば、中央値を見つけるために $order\_nr < .50 * n$ある最低年齢を使用する。最小値と最大年齢は別々に計算される：
 
 ```sql
 WITH ages
@@ -508,7 +501,7 @@ CROSS JOIN (
 | -------:| -------:| ----------:| -------:| -------:|
 |       0 |       6 |         17 |      34 |      90 |
 
-More complex computations can also be performed in R instead of using SQL. For example, we can get the same answer using this R code:
+SQLを使用する代わりに、Rで、より複雑な計算を実行することもできる。たとえば、このコードを使用して同じ結果を得ることができる：
 
 ```{r eval=FALSE}
 sql <- "SELECT YEAR(observation_period_start_date) -
@@ -525,9 +518,9 @@ cat("  0%  25%  50%  75% 100%
 ")
 ```
 
-Here we compute age on the server, download all ages, and then compute the age distribution. However, this requires millions of rows of data to be downloaded from the database server, and is therefore not very efficient. You will need to decide on a case-by-case basis whether a computation is best performed in SQL or in R.
+サーバーから年齢を計算して、すべての年齢をダウンロードして、年齢分布を計算する。しかし、そのためには、データベース・サーバーで数百万行のデータをダウンロードする必要があるため、効率が落ちる。計算は、SQLで最もよく実行されるRで最もよく実行されるかどうかをケースバイケースで決定する。
 
-Queries can use the source values in the CDM. For example, we can retrieve the top 10 most frequent condition source codes using:
+クエリはCDMのsource valueを使用することもできる。たとえば、以下のように使用して最も頻繁上位10個のcondition source codeを検索することができる：
 
 ```sql
 SELECT TOP 10 condition_source_value, 
@@ -549,11 +542,11 @@ ORDER BY -COUNT(*);
 |                    I10 |   19453451 |
 |                   3180 |   18973883 |
 
-Here we grouped records in the CONDITION_OCCURRENCE table by values of the CONDITION_SOURCE_VALUE field, and counted the number of records in each group. We retrieve the CONDITION_SOURCE_VALUE and the count, and reverse-order it by the count.
+ここCONDITION_OCCURRENCEテーブルの行をCONDITION_SOURCE_VALUEフィールドの値にグループ化し、各グループの行数を数えた。私たちはCONDITION_SOURCE_VALUE、countは、countの逆を検索した。
 
-## Using the Vocabulary When Querying
+## 照会するときVocabulary使用する
 
-Many operations require the vocabulary to be useful. The Vocabulary tables are part of the CDM, and are therefore available using SQL queries. Here we show how queries against the Vocabulary can be combined with queries against the CDM. Many fields in the CDM contain concept IDs which can be resolved using the CONCEPT table. For example, we may wish to count the number of persons in the database stratified by gender, and it would be convenient to resolve the GENDER_CONCEPT_ID field to a concept name:
+多くの作業ではVocabularyは有用である。 VocabularyテーブルはCDMの一部であるため、SQLクエリを使用して利用することができる。 Vocabularyの質がCDMに対する質疑とどのように組み合わせることができるか示す。 CDMの多くのフィールドには、CONCEPTテーブルを使用して確認することができるconcept IDが含まれている。たとえば、データベースから性別に応じて階層化された人数をカウントしようとするとき、GENDER_CONCEPT_IDをconcept nameに見つけ切り替えて使用することがより便利である：
 
 ```sql
 SELECT COUNT(*) AS subject_count,
@@ -568,7 +561,7 @@ GROUP BY concept_name;
 |      14927548 |       FEMALE |
 |      11371453 |         MALE |
 
-A very powerful feature of the Vocabulary is its hierarchy. A very common query looks for a specific concept *and all of its descendants*. For example, imagine we wish to count the number of prescriptions containing the ingredient ibuprofen:
+Vocabularyの非常に強力な特徴は、階層にある。特定の概念とそれに属する*すべての下位概念*を見つけるクエリを使用している場合が頻繁である。たとえば、ibuprofen成分が含まれている規定の数を数えたいと想像してください：
 
 ```sql
 SELECT COUNT(*) AS prescription_count
@@ -589,43 +582,43 @@ WHERE LOWER(ingredient.concept_name) = 'ibuprofen'
 
 \index{QueryLibrary}
 
-QueryLibrary is a library of commonly-used SQL queries for the CDM. It is available as an online application[^queryLibraryUrl] shown in Figure \@ref(fig:queryLibrary), and as an R package.[^queryLibraryPackageUrl]
+QueryLibraryはCDMの一般的に使用されるSQLクエリのライブラリです。図\@ref(fig:queryLibrary)に示されているアプリケーション[^queryLibraryUrl] とRパッケージで提供され.[^queryLibraryPackageUrl]
 
 [^queryLibraryUrl]: http://data.ohdsi.org/QueryLibrary
 
 [^queryLibraryPackageUrl]: https://github.com/OHDSI/QueryLibrary
 
-```{r queryLibrary, fig.cap='QueryLibrary: a library of SQL queries against the CDM.',echo=FALSE, out.width='100%', fig.align='center'}
+```{r queryLibrary, fig.cap='QueryLibrary: CDMのSQL照会ライブラリです。',echo=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("images/SqlAndR/queryLibrary.png")
 ```
 
-The purpose of the library is to help new users learn how to query the CDM. The queries in the library have been reviewed and approved by the OHDSI community. The query library is primarily intended for training purposes, but it is also a valuable resource for experienced users.
+ライブラリの目的は、新しいユーザーがCDMにクエリする方法を学ぶよう助けるものである。ライブラリの質はOHDSIコミュニティで検討し、承認した。質疑ライブラリは、主に教育目的のために使用され、熟練したユーザーに有用な資源でもある。
 
-The QueryLibrary makes use of SqlRender to output the queries in the SQL dialect of choice. Users can also specify the CDM database schema, vocabulary database schema (if separate), and the Oracle temp schema (if needed), so the queries will be automatically rendered with these settings.
+QueryLibraryはSqlRenderを使用して、選択したSQL言語でクエリを出力する。ユーザーはCDMデータベーススキーマ、vocabularyデータベーススキーマ（別の場合）およびOracle一時スキーマ（必要な場合）を指定することができますので、これらの設定でクエリが自動的に描画される。
 
-## Designing a Simple Study
+## 簡単な研究を設定する
 
-### Problem Definition
+### 問題の定義
 
-Angioedema is a well-known side-effect of ACE inhibitors (ACEi). @slater_1988 estimate the incidence rate of angioedema in the first week of ACEi treatment to be one case per 3,000 patients per week. Here we seek to replicate this finding, and stratify by age and gender. For simplicity, we focus on one ACEi: lisinopril. We thus answer the question
+Angioedema（血管浮腫）は、ACE inhibitor（ACEi）のよく知られている副作用である。 [@slater_1988] ACEi治療の最初の週に血管浮腫の発生率が週3,000人の患者につき1件であると推定した。ここでは、この結論を模倣して、年齢や性別に応じて階層化する。簡単にするために、私たちは一つのACEi：lisinoprilに重点を置く。したがって、私たちは、質問に答える。
 
-> What is the rate of angioedema in the first week following lisinopril treatment initiation, stratified by age and gender?
+> Lisinopril 治療開始後の最初の週に、年齢や性別に応じて階層化された血管浮腫の割合はどのくらいですか？
 
-### Exposure
+### 曝露
 
-We'll define exposure as first exposure to lisinopril. By first we mean no earlier exposure to lisinopril. We require 365 days of continuous observation time prior to the first exposure.
+Exposure（曝露）は、lisinoprilの最初の露出に定義する。まず、以前にlisinoprilにさらされていないことを意味する。第一印象の前に、365日の連続観察期間が必要である。
 
-### Outcome
+### アウトカム
 
-We define angioedema as any occurrence of an angioedema diagnosis code during an inpatient or emergency room (ER) visit. 
+入院または緊急治療室の訪問の血管浮腫の診断コードの発生に血管浮腫を定義する。
 
-### Time-At-Risk
+### リスク期間(Time-at-risk)
 
-We will compute the incidence rate in the first week following treatment initiation, irrespective of whether patients were exposed for the full week.
+患者が一週間露出されたかどうかに関係なく、この治療開始後の最初の週に発生率を計算する。
 
-## Implementing the Study Using SQL and R
+## SQLとRを使用して研究を実装
 
-Although we are not bound to any of the OHDSI tool conventions, it is helpful to follow the same principles. In this case, we will use SQL to populate a cohort table, similarly to how the OHDSI tools work. The COHORT table is defined in the CDM, and has a predefined set of fields that we will also use. We first must create the COHORT table in a database schema where we have write access, which likely is not the same as the database schema that holds the data in CDM format. 
+OHDSIツール規約に拘束されないが、同じ原理に従うことは、有用である。この場合、OHDSIツールの動作と同様に、SQLを使用してコホートテーブルを満たす。コホートテーブルはCDMに定義されており、事前定義されたフィールドのセットもある。まず、書き込みアクセス権があるデータベーススキーマにCOHORTテーブルを作成するために、これはCDMの形式でデータを格納するデータベーススキーマと同じでないことができる。 
 
 ```{r eval=FALSE}
 library(DatabaseConnector)
@@ -650,11 +643,11 @@ renderTranslateExecuteSql(conn, sql,
                           cohort_table = cohortTable)
 ```
 
-Here we have parameterized the database schema and table names, so we can easily adapt them to different environments. The result is an empty table on the database server.
+ここでは、データベーススキーマとテーブル名をパラメータ化して、他の環境に容易に適用することができる。結果は、データベース・サーバーの空のテーブルである。
 
-### Exposure Cohort
+### 曝露コホート
 
-Next we create our exposure cohort, and insert it into our COHORT table:
+次に、曝露コホートを作成COHORTテーブルに挿入する：
 
 ```{r eval=FALSE}
 sql <- "
@@ -700,11 +693,11 @@ renderTranslateExecuteSql(conn, sql,
                           cdm_db_schema = cdmDbSchema)
 ```
 
-Here we use the DRUG_ERA table, a standard table in the CDM that is automatically derived from the DRUG_EXPOSURE table. The DRUG_ERA table contains eras of continuous exposure at the ingredient level. We can thus search for lisinopril, and this will automatically identify all exposures to drugs containing lisinopril. We take the first drug exposure per person, and then join to the OBSERVATION_PERIOD table, and because a person can have several observation periods we must make sure we only join to the period containing the drug exposure. We then require at least 365 days between the OBSERVATION_PERIOD_START_DATE and the COHORT_START_DATE.
+ここでは、DRUG_EXPOSUREテーブルから自動的に派生したCDMの標準テーブルであるDRUG ERAテーブルを使用する。 DRUG ERAテーブルには、成分のレベルで連続露出期間が含まれている。したがってlisinoprilを検索することができ、これはlisinoprilを含有した薬物のすべての露出を自動的に識別します。人あたりの最初の薬物暴露を取った次のOBSERVATION_PERIODテーブルと結合し、一人が複数観察期間を持つことができますので、薬物の露出が含まれている期間のみ結合する必要がある。次にOBSERVATION_PERIOD_START_DATEとCOHORT_START_DATEの間に、少なくとも365日が必要である。
 
-### Outcome Cohort
+### アウトカムコホート
 
-Finally, we must create our outcome cohort:
+最後に、我々はアウトカム（outcome）コホートを作成する：
 
 ```{r eval=FALSE}
 sql <- "
@@ -741,11 +734,11 @@ renderTranslateExecuteSql(conn, sql,
                           cdm_db_schema = cdmDbSchema)
 ```
 
-Here we join the CONDITION_OCCURRENCE table to the CONCEPT_ANCESTOR table to find all occurrences of angioedema or any of its descendants. We use DISTINCT to make sure we only select one record per day, as we believe multiple angioedema diagnoses on the same day are more likely to be the same occurrence rather than multiple angioedema events. We join these occurrences to the VISIT_OCCURRENCE table to ensure the diagnosis was made in and inpatient or ER setting.
+CONDITION OCCURRECEテーブルとCONCEPT ANCESTORテーブルを結合して、すべての血管浮腫とその子孫を探す。同日に複数の血管浮腫の診断は、複数の血管浮腫の発生がなく、同じ事件である可能性が高いため、DISTINCTを使用して、一日に1行だけ選択するようにする。これらの発生をVISIT_OCCURRENCEテーブルと結合して、入院や緊急治療室環境での診断されたことを確認する。
 
-### Incidence Rate Calculation
+### 発生率の計算
 
-Now that our cohorts are in place, we can compute the incidence rate, stratified by age and gender:
+コホートが準備されたので、年齢や性別に応じて層別化された発生率を計算することができる：
 
 ```{r eval=FALSE}
 sql <- "
@@ -808,11 +801,11 @@ results <- renderTranslateQuerySql(conn, sql,
                                    snakeCaseToCamelCase = TRUE)
 ```
 
-We first create "tar," a CTE that contains all exposures with the appropriate time-at-risk. Note that we truncate the time-at-risk at the OBSERVATION_PERIOD_END_DATE. We also compute the age in 10-year bins, and identify the gender. The advantage of using a CTE is that we can use the same set of intermediate results several times in a query. In this case we use it to  count the total amount of time-at-risk, as well as the number of angioedema events that occur during the time-at-risk.
+まず、適切なリスク期間ですべての露出を含むCTEである "tar" を作る。 OBSERVATION_PERIOD_END_DATEで危険観察期間を短縮することに注意する。また、10年単位で年齢を計算し、性別を把握する。 CTEを使用すると、同じ中間結果セットを照会で複数回使用できるという長所がある。この場合、危険観察期間中に発生する血管浮腫事件の数との合計危険観察期間の量を計算するために使用される。
 
-We use `snakeCaseToCamelCase = TRUE` because in SQL we tend to use snake_case for field names (because SQL in case-insensitive), whereas in R we tend to use camelCase (because R is case-sensitive). The `results` data frame column names will now be in camelCase.
+SQLでは、フィールド名にsnake_case（大文字と小文字を区別しない）を使用するのに対しRはcamelCase（大文字と小文字を区別する）を使用する傾向があるから `snakeCaseToCamelCase = TRUE`とする。 `results` データフレームの列名は、現在camelCaseある。
 
-With the help of the ggplot2 package we can easily plot our results:
+ggplot2パッケージの助けを借りて、次のような結果を簡単に表示することができる：
 
 ```{r eval=FALSE}
 # Compute incidence rate (IR) :
@@ -831,9 +824,9 @@ ggplot(results, aes(x = age, y = ir, group = gender, color = gender)) +
 knitr::include_graphics("images/SqlAndR/ir.png")
 ```
 
-### Clean Up
+### 仕上げする
 
-Don't forget to clean up the table we created, and to close the connection:
+生成されたテーブルを整理して、接続を閉じることを忘れないでください：
 
 ```{r eval=FALSE}
 sql <- "
@@ -847,58 +840,58 @@ renderTranslateExecuteSql(conn, sql,
 disconnect(conn)
 ```
 
-### Compatibility
+### 互換性
 
-Because we use OHDSI SQL together with DatabaseConnector and SqlRender throughout, the code we reviewed here will run on any database platform supported by OHDSI. 
+OHDSI SQLをDatabaseConnectorとSQLRenderで使用するので、ここで検討したコードは、OHDSIがサポートするすべてのデータベース・プラットフォームで実行される。
 
-Note that for demonstration purposes we chose to create our cohorts using hand-crafted SQL. It would probably have been more convenient to construct cohort definition in ATLAS, and use the SQL generated by ATLAS to instantiate the cohorts. ATLAS also produced OHDSI SQL, and can therefore easily be used together with SqlRender and DatabaseConnector.
+デモの目的で手作業で作成したSQLを使用してコホートを作ることにしたという点に注意してください。 ATLASでコホート定義を構成しATALSで生成されたSQLを使用してコホートをインスタンス化することが、より便利だろう。 ATLASはまたOHDSI SQLを生成し、このようにSqlRenderとDatabaseConnectorと簡単に使用することができる。
 
-## Summary
+## 要約
 
 ```{block2, type='rmdsummary'}
-- **SQL** (Structured Query Language) is a standard language for querying databases, including those that conform to the Common Data Model (CDM).
+- **SQL**は、共通データモデルに準拠し、データベースを含むデータベースを照会するための標準的な言語である。
 
-- Different database platforms have different SQL dialects, and require different tools to query them.
+- データベースプラットフォームごとにSQL言語が異なり、これを質疑するためには、他のツールが必要である。
 
-- The **SqlRender** and **DatabaseConnector** R packages provide a unified way to query data in the CDM, allowing the same analysis code to be run in different environments without modification.
+- **SqlRender** と**DatabaseConnector** Rパッケージは、CDMでデータを照会する統合された方法を提供し、同じ分析コードを変更せずに、他の環境で実行することができる。
 
-- By using R and SQL together we can implement custom analyses that are not supported by the OHDSI tools.
+- Rと SQLを一緒に使用すると、OHDSIツールでサポートされていないユーザーカスタマイズ分析の研究を実装することができる。
 
-- The **QueryLibrary** provides a collection of re-usable SQL queries for the CDM.
+- **QueryLibrary** はCDMに再利用可能なSQLクエリーのコレクションを提供する。
 
 ```
 
-## Exercises
+## 例
 
-#### Prerequisites {-}
+#### 前提条件 {-}
 
-For these exercises we assume R, R-Studio and Java have been installed as described in Section \@ref(installR). Also required are the [SqlRender](https://ohdsi.github.io/SqlRender/), [DatabaseConnector](https://ohdsi.github.io/DatabaseConnector/), and [Eunomia](https://ohdsi.github.io/Eunomia/) packages, which can be installed using:
+この練習問題では、 \@ref(installR)節で説明したように R, R-Studio, Javaがインストールされ仮定する。また、次のを使用してインストールすることができる [SqlRender](https://ohdsi.github.io/SqlRender/), [DatabaseConnector](https://ohdsi.github.io/DatabaseConnector/) と [Eunomia](https://ohdsi.github.io/Eunomia/) パッケージも必要である:
 
 ```{r eval=FALSE}
 install.packages(c("SqlRender", "DatabaseConnector", "devtools"))
 devtools::install_github("ohdsi/Eunomia", ref = "v1.0.0")
 ```
 
-The Eunomia package provides a simulated dataset in the CDM that will run inside your local R session. The connection details can be obtained using:
+Eunomiaパッケージは、ローカルRセッション内で実行されるCDMのシミュレーションされた他のデータセットを提供する。接続の詳細は、以下を使用して得ることができる：
 
 ```{r eval=FALSE}
 connectionDetails <- Eunomia::getEunomiaConnectionDetails()
 ```
 
-The CDM database schema is "main".
+CDMデータベーススキーマは、"main"である。
 
 ```{exercise, exercisePeopleCount}
-Using SQL and R, compute how many people are in the database.
-
+SQLとRを使用してデータベースにいくつかの人がいるかどうかを計算してください。
 ```
 
 ```{exercise, exerciseCelecoxibUsers}
-Using SQL and R, compute how many people have at least one prescription of celecoxib.
-
+SQLとRを使用してcelecoxibを少なくとも一回以上処方された人を計算してください。
 ```
+
 ```{exercise, exerciseGiBleedsDuringCelecoxib}
-Using SQL and R, compute how many diagnoses of gastrointestinal hemorrhage  occur during exposure to celecoxib. (Hint: the concept ID for gastrointestinal hemorrhage is [192671](http://athena.ohdsi.org/search-terms/terms/192671).)
+SQLとRを使用してcelecoxibにさらされている間、どのように多くの胃出血（gastrointestinal hemorrhage）があることを診断する。 （ヒント：胃腸出血のconcept IDは [192671](http://athena.ohdsi.org/search-terms/terms/192671)である。)
 
 ```
 
-Suggested answers can be found in Appendix \@ref(SqlAndRanswers).
+提案された回答は、付録 \@ref(SqlAndRanswers)で見つけることができる。
+
