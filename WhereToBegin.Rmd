@@ -1,117 +1,118 @@
-# Where to Begin {#WhereToBegin}
+＃OHDSI開始する{#WhereToBegin}
 
-*Chapter leads: Hamed Abedtash & Kristin Kostka*
+* Chapter leads：Hamed Abedtash＆Kristin Kostka *
 
-> “A journey of a thousand miles begins with a single step.” - Lao Tzu
+>「千里の道も一歩から」 - 老子
 
-The OHDSI community represents a mosaic of stakeholders across academia, industry and government-entities. Our work benefits a range of individuals and organizations, including patients, providers, and researchers, as well as health care systems, industry, and government agencies. This benefit is achieved by improving both the quality of healthcare data analytics as well as the usefulness of healthcare data to these stakeholders. We believe observational research is a field which benefits greatly from disruptive thinking. We actively seek and encourage fresh methodological approaches in our work. \index{community}
+OHDSIコミュニティは学界、産業界、政府機関全体の様々な利害関係者を代表している。本コミュニティの作業に医療システムだけでなく、患者、医療提供者、研究者を含むさまざまな個人や機関が利益を受けることになる。これらの利点は、医療データをより有用に改善するだけでなく、医療データの分析の質を向上させることにより、得られることになる。観察型研究は、破壊的な考えdisruptive thinkingから大きく利益を得ることができる分野である。この分野では、積極的な新しい方法論の導入が必要である。 \ index {community}
 
-## Join the Journey 
-Everyone is welcome to actively participate in OHDSI, whether you are a patient, a health professional, a researcher, or someone who simply believes in our cause. OHDSI maintains an inclusive membership model. To become an OHDSI collaborator requires no membership fee. Collaboration is as simple as raising a hand to be included in the yearly OHDSI membership count. Involvement is entirely at-will. A collaborator can have any level of contribution within the community, ranging from someone who attends weekly community calls to leading network studies or OHDSI working groups. Collaborators do not have to be data holders to be considered active members of the community. The OHDSI community aims to serve data holders, researchers, health care providers and patients & consumers alike. A record of collaborator profiles are maintained and periodically updated on the OHDSI website. Membership is fostered via OHDSI community calls, workgroups and regional chapters.\index{join the journey} \index{workgroups} \index{chapters}
+## 一緒に旅をしませんか
+患者、医療専門家、研究者、あるいは単にOHDSIの目的に同感する人であれば誰でもOHDSIコミュニティに積極的に参加することができる。 OHDSIは包容的メンバーシップモデルを追求しOHDSIの共同研究者になるためのメンバーシップの費用はない。参加を希望する人は、ただ手を上げれば、毎年OHDSIメンバーシップカウントに含まれる。参加は完全に自分の意志によるものであり、毎週コミュニティのネットワークスタディやOHDSIワークグループに参加するだけで十分である。必ずデータを保持しておく必要OHDSIコミュニティのアクティブメンバーになることはない。本コミュニティは、データ所有者、研究者、ヘルスケア提供者、患者と消費者の両方に助けを与えようとする。共同研究者のプロフィールはOHDSIウェブサイトで管理されて定期的に更新されている。メンバーシップは、OHDSIコミュニティリモート会議、ワークグループ、地域の集まりを通じて育成されている。 \ index {join the journey} \ index {workgroups} \ index {chapters}
 
-```{r jointhejourney, fig.cap='Join the journey - How to become an OHDSI collaborator.', echo=FALSE, out.width='90%', fig.align='center'}
+```{r jointhejourney, fig.cap='一緒に旅しませんか -  OHDSIの協力者になる方法。',echo=FALSE, out.width='90%', fig.align='center'}
 knitr::include_graphics("images/WhereToBegin/joinTheJourney.png")
 ```
 
 
-### OHDSI Forums
-The OHDSI Forums[^forumUrl] is an online discussion site where OHDSI Community Collaborators can hold conversations in the form of posted messages. The forums consist of a tree-like directory structure. The top end is "Categories". The forums can be divided into categories for the relevant discussions. Under the categories are sub-forums and these sub-forums can further have more sub-forums. The topics (commonly called threads) come under the lowest level of sub-forums and these are the places under which forums members can start their discussions or posts. 
+### OHDSIフォーラム
+OHDSIフォーラム[^ forumUrl]はOHDSIコミュニティ共同研究者たちがメッセージを上げる形式を使用して対話するオンラインディスカッションサイトである。フォーラムは、ツリーのような構造で構成された。最も上位には「カテゴリ」があり、関連性のある議論のカテゴリーに分けられる。各カテゴリ下には、サブフォーラムの追加のサブフォーラムで構成されている。各トピック（スレッドともいう）の最も低いサブフォーラムでフォーラムのメンバー間の議論やポストが作成される。
 
 [^forumUrl]: http://forum.ohdsi.org
 
-In the OHDSI forums, you can find categories of content including:
+OHDSIフォーラムでは、次のようなコンテンツのカテゴリを見つけることができます：
 
-- **General:** for general discussion about the OHDSI community and how to get involved
-- **Implementers:** for discussion about how to implement the Common Data Model and OHDSI analytics framework in your local environment
-- **Developers:** for discussion around open-sourced development of OHDSI applications and other tools that leverage the OMOP CDM
-- **Researchers:** for discussion around CDM-based research, including evidence generation, collaborative research, statistical methods and other topics of interest to the OHDSI Research Network
-- **CDM Builders:** for discussion of ongoing CDM development, including requirements, vocabulary, and technical aspects
-- **Vocabulary Users:** for discussion around vocabulary content
-- **Regional Chapters (e.g. Korea, China, Europe):** for regional discussions in their native languages related to local OMOP implementations and OHDSI community activities
+ -  **一般General **：OHDSIコミュニティと参加方法の全体的な議論
+ -  **実装Implementers **：ローカル環境での共同データモデルとOHDSI分析フレームワークを実装する方法についての議論
+ -  **開発者Developers **：OHDSIアプリケーションのオープンソース開発とOMOP CDMとのバランスのためのツールに関する議論
+ -  **研究者Researchers **：OHDI研究ネットワークの根拠作成、共同研究、統計的方法と他のCDM基盤研究についての議論
+ -  ** CDM開発CDM Builders **：進行中のCDMのための条件は、vocabularyそしてテクニック的な要素に関する議論
+ -  ** VocabularyユーザVocabulary Users **：Vocabularyコンテンツに関する議論
+ -  **地域支部Regional Chapters（例えば、韓国、中国、欧州）**：地域言語で行われ、ローカルOMOP実装とOHDSIコミュニティ活動に関する議論
 
-
-To begin posting your own topics, you will need to sign up for an account. Once you have a forums account, you are encouraged to introduce yourself on the General Topic under the thread called "Welcome to OHDSI! - Please introduce yourself". You are invited to reply and 1) Introduce yourself and tell us a bit about what you do and 2) Let us know how you’d like to help out in the community (ex. software development, run studies, write research papers, etc). Now you are on your OHDSI Journey! From here, you are encouraged to join in the discussion. The OHDSI Community encourages using the Forums as your way to ask questions, discuss new ideas and collaborate. \index{forum}
+個々のテーマに投稿を上げるには、アカウントの登録を先にしなければならない。フォーラムのアカウントをオープンした後、General Topic下」Welcome to OHDSI！ -  Please introduce yourself」というトピックに下記のように、本人の紹介をすることをお勧めする。
+1）自己紹介と、自分の業務紹介
+2）コミュニティの中でどのように役立つかどうか（例えば、ソフトウェアの開発、研究、論文作成など）を本人の紹介に説明する。今、あなたはOHDSIの旅に参加した！以降の議論に参加することをお勧めします。 OHDSIコミュニティフォーラムを介して自分の質問を投稿し、新しいアイデアを出して、共同で参加してほしい。 \ index {forum}
 
 ```{block2, type='rmdimportant'}
-You can select topics to "watch." What this means is whenever a new post is added in a topic you’re watching, you will receive an email and be able to reply to the post directly through your email. Watch the general thread to recieve details about upcoming meeting agendas, collaboration opportunities and have the weekly OHDSI digest delivered directly to your inbox!
-
+トピックを「watch」することもできる。この意味は、興味のあるトピックに新しいポストが上がってくる場合には、メールにてご案内を受けて電子メールに返信を通って返事を送信することもあるということである。これからミーティングのアジェンダも確認することができ、共同作業の機会と週間OHDSIダイジェストをメールで受け取ることができます。
 ```
 
-### OHDSI Events
-OHDSI regularly holds in-person events to provide opportunities for collaborators to learn from each other and connect to foster future collaborations.  These events are communicated on the OHDSI website, and are free for anyone interested in attending.  
+### OHDSI イベント
+OHDSIは、定期的に直接参加が可能なイベントを開催し、共同研究者が互いに学習し、今後の協力関係を強化する機会を提供する。これらのイベントは、OHDSIウェブサイトを介して配信され、参加に興味がある人に無料で提供される。
 
-OHDSI Symposia are scientific conferences, held annually in US, Europe, and Asia, where collaborators can present their latest research through plenary talks, poster presentations, and software demonstrations.  OHDSI Symposia provide a great venue for networking and to learn about the most recent progress across the community.  OHDSI Symposia are generally accompanied by OHDSI tutorials, taught by fellow OHDSI collaborators as the course faculty, which provide community newcomers the opportunity for hands-on engagement on topics around data standards and analysis best practices.  These tutorials are generally video-recorded and made available on the OHDSI website after the events for those who can't make it in person.   
+OHDSIシンポジウムは、米国、ヨーロッパ、アジアなどで毎年開催される科学会議で、これにより、共同研究者は、総会、ポスター発表およびソフトウェアデモンストレーションなどを通じて、それぞれの最新の研究を発表することができる。 OHDSIシンポジウムはOHDSIコミュニティで行われている最新状況を学ぶことができる最適の場所である。一般的に、OHDSIシンポジウムでは、新しいコミュニティ参加者がデータの標準や分析のためのベストプラクティスに関するトピックについて学ぶことができるOHDSIチュートリアルが一緒に進行される。
 
-OHDSI Collaborator face-to-face events are smaller fora which are typically centered on a problem of shared interest to focus on during the time together.  Past events have included a phenotype hack-a-thon, and data quality hack-a-thon, and open-source software documentation-a-thon.  OHDSI has hosted multiple Study-a-thon events, where the goal of the multi-day session is to collaborate as a team on a particular research question by designing and implementing an appropriate observational analysis, executing the study across the OHDSI network, and synthesizing the evidence for public dissemination. In all of these events, there is a shared desire to solve a common problem but also a shared interest in providing a welcoming environment that encourages learning and continuous improvement on the process of collaborative problem-solving.
+OHDSI共同研究者の対面イベントface-to-face eventは、より規模が小さいフォーラムですが、一般的に共同で関心を持っている特定の問題を中心に構成されている。過去のイベントの中には、表現型のハッカソンphenotype hack-a-thon、データの質ハッカソンdata quality hack-a-thon、オープンソースのソフトウェアdocumentation-a-thonなどがあった。 OHDSIは、様々なスタディソンstudy-a-thonイベントを開催しており、これにより、共同研究者たちが数日間一緒にチームになって、特定の研究テーマについて、適切な観察型分析とOHDSIネットワークに関する学習、多くの人に知らせることができる根拠を生成することができる機会を提供した。このような行事では、共通の問題を解決しようとする熱心だけではなく、協調的な問題解決プロセスの学習と継続的な改善を促進する快適な環境を提供するという共通の関心もあります。
 
-Learn more about the power of the OHDSI Community. Explore past symposiums, face-to-face meetings and watch OHDSI tutorials by visiting the [OHDSI Past Events section](https://www.ohdsi.org/past-events/) on the OHDSI website. Past Events is updated regularly to archive community events.
+OHDSIコミュニティの力をより詳しく学ぼう。 OHDSIウェブサイトの[OHDSI Past Events section]（https://www.ohdsi.org/past-events/）で過去シンポジウム、対面イベント、OHDSIチュートリアルなどに接することができる。
 
-### OHDSI Community Calls
-OHDSI Community Calls are a weekly opportunity to spotlight ongoing activity within the OHDSI community. Held every Tuesday from 12-1pm ET, these teleconferences are a time for the OHDSI community to come together to share recent developments and recognize the accomplishments of individual collaborators, working groups and the community as a whole. Each week’s meeting is recorded, and presentations are archived in the OHDSI website resources. 
+### OHDSI コミュニティリモート会議
+OHDSIコミュニティ週間リモート会議（OHDSI call）は、毎週OHDSIコミュニティ内で発生する活動について学ぶ機会である。韓国時間で毎週水曜日の午前2時（米国東部時間基準火曜日の午後12時から1時）に電話会議で行われており、OHDSIソフトウェアの最新開発情報だけでなく、個々の共同研究者たちとのグループ活動とコミュニティの全体的な成果を知ることができる機会である。このミーティングはすべて録画されており、発表資料はOHDSIウェブサイトのリソースで確認することができる。
 
-All OHDSI Collaborators are welcome to participate in this weekly teleconference and encouraged to propose topics for community discussion. OHDSI Community Calls can be a forum to share research findings, present and seek feedback for active works-in-progress, demonstrate open-source software tools under development, debate community best practices for data modeling and analytics, and brainstorm future collaborative opportunities for grants/publications/conference workshops. If you are a Collaborator with a topic for an upcoming OHDSI Collaborator meeting, you are invited to post your thoughts on the OHDSI Forums.
+私たちは、すべてのOHDSI共同研究者たちが毎週電話会議に出席し、コミュニティの議論のための主題を提供することを望む。 OHDSIコミュニティリモート会議は、研究結果を共有し、現在活発に進行中の作業についての意見を提示し、フィードバックを得て、開発中のオープンソースソフトウェアをデモし、データモデリングと解析のためのベストプラクティスをコミュニティと一緒に議論して、補助金/出版/会議ワークショップなどのための未来の共同作業の機会について多くのアイデアを議論する場となることができる。もしリモート会議の発表と関連アイデアがあればOHDSIフォーラムに投稿を上げることができる。
 
-As a newcomer to the OHDSI community, it is encouraged to add this call series to your calendar to get acquainted with what is happening across the OHDSI network. If you would like to join an OHDSI call, please consult the [OHDSI wiki](https://www.ohdsi.org/web/wiki/doku.php?id=projects:ohdsi_community). Community call topics vary from week-to-week. You can also consult the OHDSI Weekly Digest on the OHDSI forum for more information on weekly presentation topics. Newcomers are invited to introduce themselves on their first call and tell the community about themselves, their background and what brought them to OHDSI. \index{community!community calls} 
+OHDSI新入ならリモート会議を通じてOHDSIネットワーク内で起こっていることについて知っていくのがいいだろう.OHDSIリモート会議に参加する場合は、[OHDSI Wiki]（https://www.ohdsi.org/web/wiki/doku.php ？id = projects：ohdsi_community）を参照してください。コミュニティ遠隔会議のテーマは毎週違う。 OHDSIフォーラムのOHDSI週間ダイジェストを介して、毎週発表テーマに関する情報を取得することができる。各リモート会議に初めて参加する人の背景とOHDSI登録同期の紹介を受ける時間を持つ。 \ index {community！community calls}
 
-### OHDSI Workgroups
-OHDSI has a variety of ongoing projects lead by workgroup teams. Each workgroup has its own leadership team which determine the project’s objectives, goals and artifacts to be contributed to the community. Workgroup participation is open to all who have an interest in contributing to the project objectives and goals. Workgroups may be long-standing, strategic objectives or short-term projects to accomplish a specific need in the community. Workgroup meeting cadence is determined by the project leadership and will vary from group to group. A list of the active workgroups is maintained on the [OHDSI Wiki](https://www.ohdsi.org/web/wiki/doku.php?id=projects:overview). \index{workgroups} 
+###	OHDSI OHDSIワークグループ
+OHDSIには、ワークグループWorkgroupチームが導いていくさまざまなプロジェクトがある。それぞれのワークグループは、コミュニティに貢献するためのプロジェクトの目的、目標、詳細などを決定するリーダーシップを持っている。プロジェクトの目的と目標に貢献したい参加者なら誰でも、ワークグループに参加することができる。ワークグループは、長期的な目標をのために長く維持されることもして、コミュニティの特定のニーズを満たすための短期プロジェクトのために、短期的にのみ維持されることもある。ワークグループの定期ミーティングはプロジェクトリーダーによって決定され、グループごとにそれぞれ異なっている。活動中のワークグループのリストは、[OHDSI Wiki]（https://www.ohdsi.org/web/wiki/doku.php?id=projects:overview）で管理されている。 \ index {workgroups}
 
-Table \@ref(tab:OHDSIworkgroups) provides a quick reference to active OHDSI workgroups. You are encouraged to join a call and learn more.
+テーブル\ @ref（tab：OHDSIworkgroups）は、活動中のOHDSIワークグループのリファレンスを提供する。そのプロジェクトに積極的に参加して学んでください。
 
-Table: (\#tab:OHDSIworkgroups) Notable OHDSI Workgroups
+Table: (\#tab:OHDSIworkgroups) 注目すべきOHDSIワークグループ
 
-|Workgroup Name|Objective|Target Audience|
-|:---- |:------------------ |:--------- |
-|Atlas & WebAPI|Atlas and WebAPI are part of the OHDSI open-source software architecture that aim to provide standardized analytic capabilities built on the foundation of the OMOP Common Data Model.|Java & JavaScript software developers aiming to improve and contribute to the open-source Atlas/WebAPI platform|
-|CDM & Vocabulary|To continue to develop the OMOP Common Data Model for the purpose of systematic, standardized and large-scale analytics applied to clinical patient data. To improve the quality of the Standardized Vocabularies by increasing their coverage of international coding systems and clinical aspects of patient care in order to support the standardized analytics developed by other working groups.| Any who has an interest in improving the OMOP Common Data Model and Standardized Vocabularies to meet all needs and use cases|
-|Genomics|Expand the OMOP CDM to incorporate genomic data from patients. The group will define a CDM-compatible schema that can store information for genetic variants from various sequencing process.|Open to all|
-|Population-Level Estimation|Develop scientific methods for observational research leading to population level estimates of effects that are accurate, reliable, and reproducible, and facilitate the use of these methods by the community.|Open to all|
-|Natural Language Processing|To promote the use of textual information from Electronic Health Records (EHRs) for observational studies under the OHDSI umbrella. To facilitate this objective, the group will develop methods and software that can be implemented to utilize clinical text for studies by the OHDSI community.|Open to all|
-|Patient-Level Prediction|establish a standardized process for developing accurate and well-calibrated patient-centered predictive models that can be utilized for multiple outcomes of interest and can be applied to observational healthcare data from any patient subpopulation of interest|Open to all|
-|Gold Standard Phenotype Library|To enable members of the OHDSI community to find, evaluate, and utilize community-validated cohort definitions for research and other activities|Open to all with an interest in curation and validation of phenotypes|
-|FHIR Workgroup|To establish the roadmap for the OHDSI FHIR integration and to make recommendations to the broader community for leveraging the FHIR implementation and data in EHR community for the OHDSI-based observation studies and for disseminating the OHDSI data and research results through the FHIR-based tools and APIs.|Open to all with an interest in interoperability|
-|GIS|Expand the OMOP CDM and leverage OHDSI tools so that patients’ environmental exposure histories can be related to their clinical phenotypes|Open to all with an interest in health-related geographic attributes|
-|Clinical Trials|Understand clinical trial use cases where the OHDSI platform & ecosystem can aid trials in any aspect, and assist in driving updates in OHDSI tools to support.|Open to all with an interest in clinical trials|
-|THEMIS|The objective of THEMIS is to develop standard conventions, above and beyond the OMOP CDM conventions, to ensure ETL protocols designed at each OMOP site are of highest quality, reproducible and efficient.||Open to all with an interest in ETL standardization|
-|Metadata & Annotations|Our goal is to define a standard process for storing human- and machine-authored metadata and annotations in the Common Data Model to ensure researchers can consume and create useful data artifacts about observational data sets.|Open to all|
-|Patient Generated Health Data (PGHD)|The goal of this WG would be developing ETL conventions, integration process with clinical data, and analytic process for PGHD, which is generated through Smart Phone/App/Wearable devices.|Open to all|
-|Women of OHDSI|To provide a forum for women within the OHDSI community to come together and discuss challenges they face as women working in science, technology, engineering and mathematics (STEM). We aim to facilitate discusses where women can share their perspectives, raise concerns, propose ideas on how the OHDSI community can support women in STEM, and ultimately inspire women to become leaders within the community and their respective fields.|Open to all who identify with this mission|
-|Steering Committee|To uphold OHDSI's mission vision and values by ensuring all OHDSI activities and events are aligned with the needs of our growing community. In addition, the group serves as an advisory group for the OHDSI coordinating center based at Columbia by providing guidance for OHDSI's future direction.|Leaders within the community|
+| Workgroup Name |	 Objective  |	Target Audience  |
+|:------- |:---------------------------------- |:---------------------------- |
+| Atlas＆WebAPI | Atlas＆WebAPIはOHDSIオープンソースソフトウェアのいずれかOMOP-CDMベースの標準化された分析機能を提供することに重点を置いている。 |オープンソースAtlas / WebAPIプラットフォームの改善と貢献したいJavaとJavaScriptのソフトウェア開発者|
+| CDM＆Vocabulary |臨床患者ビッグデータの大規模な分析のための体系的かつ標準化されたOMOP-CDMの継続的な開発。他のワークグループによって開発された標準化された分析を支援し、国際符号化システムのカバレッジを拡大するために、標準化されたVocabularyの質的改善。 |すべての必要と事例に適用されるOMOP-CDMと標準Vocabularyを改善したい人|
+| Genomics |さまざまなシーケンス処理の結果として出てくる遺伝子変異情報のためのGenomic CDM拡張モデルの開発である。|制限なし|
+| Population- Level Estimation |正確で信頼性が高く再現可能な観察型研究の科学的方法を開発し、これらの方法の使用を促進する。|制限なし|
+| Natural Language Processing | OHDSI観察型データベースの文書データの使用を促進する。この目標を促進するためにOHDSI研究に文書データを活用するためのソフトウェアと方法を開発する。|制限なし
+| Patient- Level Prediction |正確でよく補正された患者中心の標準化されたマシンラーニング予測モデルのプロセスを構築し、様々な関心領域に使用できるようにし、また、いくつかの小群の患者のデータにも適用することができるようにする|制限なし
+| Gold Standard Phenotype Library | OHDSI参加者が一緒に検証した表現型phenotype定義と他のコミュニティで開発された表現型の定義を発見、評価、活用できるようにする。|表現型（Phenotype）のキュレーションと証明に興味がある人|
+| FHIR Workgroup | OMOP-CDMとFHIR統合のロードマップを策定しOHDSIとFHIR相互間でのツールとAPIを活用して、データや研究の発展を図る。 |相互運用性（interoperability）に興味のある人|
+| GIS | OMOP CDMを拡大しOHDSIツールを活用して、患者の環境暴露の歴史その臨床的phenotypeと関連があるようにする。|健康関連地理的特性に興味のある人|
+| Clinical Trials | OHDSIプラットフォームといくつかの面でも実験に役立つエコシステムの臨床試験ケースの理解とOHDSIツールのアップデートの助けを通じたサポート|臨床試験に興味のある人|
+THEMIS | OMOPサイトでデザインされたETLプロトコルが高いクオリティと再現することができる効率的であるように確認できるようにOMOP CDMのルールに加えて、標準ルールの開発|制限なし|
+| Metadata＆Annotations |人間と機械が作成したメタデータを保存するの標準的なプロセスと共通データモデルの注釈を定義して、研究者らが観察データセットの有用なデータの成果物を消費して作成することができようにする。|制限なし|
+| Patient Generated Health Data（PGHD）|スマートフォン、アプリ、ウェアラブル機器を使用して作成されたPGHDデータのETL規則、臨床データとの統合、PGHDの分析プロセスの開発|制限なし|
+| Women of OHDSI | OHDSIコミュニティ内部の女性たちが集まって、科学界、テクノロジー、エンジニアリング、数学（STEM）分野での女性に苦しむ挑戦を共有のためのフォーラムを提供する。女性の立場からの視点、懸念、アイデアを交わしOHDSIコミュニティがSTEM分野の女性を支援することができるかについての意見交換を促進。最終的には、女性にとって尊敬の分野で女性がリーダーになることを奨励。|この目標に同感する人|
+| Steering Committee |すべてのOHDSI活動やイベントが発展していくコミュニティの必要事項に適合することを確認することでOHDSIの使命とビジョン、価値を維持。また、今後の方向性に関するガイダンスを提供することでコロンビア大学に基盤を置いたOHDSI coordination centerの諮問グループの役割を果たし中。 |コミュニティ内部のリーダーたち|
 
-### OHDSI Regional Chapters
-An OHDSI regional chapter represents a group of OHDSI collaborators located in a geographic area who wish to hold local networking events and meetings to address problems specific to their geographic location. Today, OHDSI regional chapters include OHDSI in Europe[^europeUrl], OHDSI in South Korea[^koreaUrl] and OHDSI in China.[^chinaUrl] If you would like to set-up an OHDSI regional chapter in your region, you may do so by following the OHDSI regional chapter process outlined on the [OHDSI website](https://www.ohdsi.org/who-we-are/regional-chapters). \index{chapters}
+### OHDSI OHDSI地域支部
+OHDSI地域支部Regional Chapterは、それぞれの地理的位置の特定の問題を解決するために、ローカルネットワークのイベントや会議を開催しようとする地理的領域に位置するOHDSI共同研究者のグループを表す。現在OHDSI地域支部は韓国[^ koreaUrl]、欧州[^ europeUrl]、中国[^ chinaUrl]などがある。韓国支部フォーラムでは韓国語を利用して、質問や考えを上げることができる。
+もし本人の地域にOHDSI地域支部をセットアップしたい場合は、[OHDSI website]（https://www.ohdsi.org/who-we-are/regional-chapters）に記載されOHDSI地域支部のプロセスに沿って進行することができる。 \ index {chapters}
 
-[^europeUrl]: https://www.ohdsi-europe.org/
 [^koreaUrl]: http://forums.ohdsi.org/c/For-collaborators-wishing-to-communicate-in-Korean
+[^europeUrl]: https://www.ohdsi-europe.org/
 [^chinaUrl]: https://ohdsichina.org/
 
-### OHDSI Research Network
-Many OHDSI collaborators are interested in converting their data into the OMOP Common Data Model. The OHDSI research network represents a diverse, global community of observational databases that have undergone Extract-Transform-Load (ETL) processes to become OMOP compliant. If your journey in the OHDSI community includes transforming data, there are numerous community resources available to aid you in your journey including tutorials on the OMOP CDM and Vocabularies, freely available tools to assist with conversion, and workgroups targeting specific domains or types of data conversions. The OHDSI collaborators are encouraged to utilize the OHDSI forum to discuss and troubleshoot challenges that arise during CDM conversions.
+###	OHDSI 研究ネットワーク
+多数のOHDSI共同研究者は、自分のデータをOMOP CDMに変換することに関心がある。 OHDSI研究ネットワークは、OMOP互換性を遵守するために抽出 - 変換 - ロード（ETL）プロセスを経観察型データベースの様々なグローバルなコミュニティを表す。もしOHDSIコミュニティであなたの旅にデータ変換が含まれている場合OMOP CDMとVocabularyのチュートリアルでは、変換をサポートする無料のツール、特定のドメインまたはデータ型の種類をターゲットにしているワークグループがある。 OHDSI共同研究者は、OHDSIフォーラムを活用して、CDM変換中に発生する問題を議論し、解決することをお勧めします。
 
-## Where You Fit In
-By now, you may be wondering: *where do I fit into the OHDSI Community?*
+## どこにコミットしてみようかしら
+*今、あなたは不思議に思っているかもしれません：OHDSIコミュニティのどこに私は合うだろう？
 
-**I am a clinical researcher looking to start a study.** If you are a clinical researcher interesting in using the OHDSI Research Network to answer a specific question -- maybe even publish a paper -- you're in the right place. You can start by posting your idea to the [OHDSI Researchers Topic](https://forums.ohdsi.org/c/researchers) on the OHDSI Forum. This will help you connect with researchers of similar interest. OHDSI loves to publish and has many resources available to expedite turning your research question into an analysis and a paper. You can find more information in Chapters \@ref(Characterization), \@ref(PopulationLevelEstimation), and \@ref(PatientLevelPrediction).
+**研究を始めたいと考えている臨床研究者** あなたがOHDSI Research Networkを使用して特定の質問に答えることに興味がある臨床研究者である場合-論文を発表する場合でも-あなたは適切な場所にいます。 OHDSIフォーラムのOHDSI Researchersトピック[OHDSI Researchers Topic](https://forums.ohdsi.org/c/researchers)にアイデアを投稿することから始めることができます。 これにより、同様の関心を持つ研究者とつながることができます。 OHDSIは公開が大好きで、研究の質問を分析と論文に迅速に変換するために利用できる多くのリソースがあります。 詳細については、 \@ref(Characterization)장, \@ref(PopulationLevelEstimation)장, \@ref(PatientLevelPrediction)を参照してください
 
-**I want to read and consume the information the OHDSI community produces.** Whether you're a patient, a practicing clinician or subject matter expertise in healthcare, OHDSI wants to provide you with high quality evidence to help you better understand health outcomes. Maybe it's been a while since you have written code. Maybe you never program. You have a place in this community.  We call you an *evidence consumer* -- you are the individuals who are turning OHDSI research into action. You are sifting through to know what evidence OHDSI has generated and is generating, possibly also wanting to suggest questions relevant for you. We welcome you to join the discussion. Start asking questions on the [OHDSI Forum](http://forum.ohdsi.org). Attend Community Calls and hear about the latest research. Attend the OHDSI Symposiums and Face-to-Face Meetings to engage directly with the community. Your questions are an important part of the OHDSI community. Speak up and help us learn more about what evidence you are searching for!
+**OHDSIコミュニティが生産する情報を読み取り、消費したいです。** あなたが患者、臨床医、または医療分野の詳細専門家であれ、OHDSIは健康への影響（health outcome）をよりよく理解できるように、高品質の根拠を提供しようとする。多分コーディングみて久しいたこともあり、プログラミングを一度も見たことがないこともある。それでもあなたは、このコミュニティの一環になることがあります。私たちは、あなたを根拠消費者* evidence consumer *  -  OHDSI研究を行動に移す個人 - と呼ぶ。あなたはOHDSIがどんな根拠を作成したり、作成しているかを把握するために精密に選別して、おそらくあなたに関連する質問を提案することを望むかもしれない。このような場合を議論に誘う。 【OHDSI Forum]（http://forum.ohdsi.org）に質問を上げるたい。コミュニティリモート会議に出席して、最新の研究を聞いてください。 OHDSIシンポジウム対面ミーティングに出席して、コミュニティに直接参加してください。あなたの質問はOHDSIコミュニティの重要な部分である。あなたがどのような根拠を探しているかどうか、私たちが知っているように声を上げてください！
 
-**I work in a healthcare leadership role. I may be a data owner and/or represent one. I am evaluating the utility of the OMOP CDM and OHDSI analytical tools for my organization.** As an administrator/leader of an organization, you may have heard about OHDSI and are curious to know the OMOP CDM could work for your use cases. You may start by looking through [OHDSI Past Events](https://www.ohdsi.org/past-events/) materials to see the body of research. You may join a Community Call and simply listen in. You may also find that Chapter \@ref(DataAnalyticsUseCases) (Data Analytics Use Cases) helps you understand the kind of research the OMOP CDM and OHDSI analytics tools can enable. The OHDSI Community is here for you in your journey. Don't be afraid to speak up and ask for examples if you have specific areas you're interested in. More than 200 organizations around the world are collaborating in OHDSI, there's plenty of success stories to help showcase the value of this community.
+**保健医療分野での意思決定をすることができる責任者。データの所有者、または所有者の代表者。私は私の組織においてOMOP CDMとOHDSI分析ツールの有用性を評価しています。**組織の管理者/リーダーとしてOHDSIについて聞いたことがあり、OMOP CDMがどのようにあなたの場合に使用することができるか知りたいことがあります。もしそうなら、[OHDSI Past Events]（https://www.ohdsi.org/past-events/）の資料を通じて研究の本文を見ること始めることができる。コミュニティリモート会議に参加して、単純に聴取のみすることもできる。 \ @ref（DataAnalyticsUseCases）章（データ分析の使用例）は、OMOP CDMとOHDSI分析ツールが使用できる研究の種類を理解するのに役立つだろう。あなたのためにOHDSIコミュニティがあなたの旅にある。興味のある特定の領域がある場合、これに対する例を聞いてみることに恐れないでください。世界200以上の組織がOHDSI内で協力しており、このコミュニティの価値を示すのに役立つ成功事例が多い。
 
-**I am a database administrator looking to ETL/convert my institution's data to the OMOP CDM.** Choosing to "OMOP" your data is a novel and worthwhile undertaking. If you're just starting out on your ETL process, consult the [OHDSI Community ETL Tutorial Slides](https://www.ohdsi-europe.org/images/symposium-2019/tutorials/OHDSI_Vocabulary_CDM_Tutorial.pdf)  or sign-up for the next offering at an upcoming OHDSI Symposium. Consider dialing into the THEMIS workgroup calls and engaging the OHDSI Forum with your questions. You will find a wealth of knowledge in the community who are interested in helping your successful implementation of the OMOP CDM. Don't be shy!
+**機関のデータをETLと変換してOMOP CDMに変換しようとするデータベース管理者**あなたのデータを「OMOP」しようとするのは、高貴な、貴重な事業である。もしETLプロセスを始めたばかりしている場合は、[OHDSI Community ETL Tutorial Slides]（https://www.ohdsi-europe.org/images/symposium-2019/tutorials/OHDSI_Vocabulary_CDM_Tutorial.pdf）を参照するか、今後のOHDSIシンポジウムに登録してください。 THEMISワークグループリモート回これに参加したり、OHDSIフォーラムに質問を上げることを検討してください。 OMOP CDMの成功の実装を支援することに関心が多いコミュニティでの豊富な知識を見つけることができるだろう。恥ずかしがらないでください。
 
-**I am a biostatistician and/or methods developer interested in contributing to the OHDSI tool stack.** You're savvy in R. You know how to commit to Git. Most of all, you're eager to bring your expertise to the OHDSI Methods Library and further develop these methodologies. You'll want to start by joining either the Population-Level Estimation or Patient Level Prediction workgroup calls to hear more about current community priorities. As you're using the OHDSI tools, you can also file Issues under the respective GitHub repo (e.g. if it is a SQL Render package problem, you would file under the GitHub Repo for OHDSI/SqlRender). We welcome your contributions!
- 
-**I am a software developer interested in building a tool that complements the OHDSI tool stack.** Welcome to the community! As part of the OHDSI mission, our tools are open source and governed under Apache licenses. You are welcome to develop solutions that complement the OHDSI tool stack. Feel free to join a workgroup and pitch your ideas. Please be mindful that OHDSI is heavily invested in open-science and open collaboration. Proprietary algorithms and software solutions are welcome but are not the main focus of our software development efforts.
- 
-**I am a consultant looking to advise the OHDSI Community.** Welcome to the community! Your expertise is valuable and appreciated. You are welcome to promote your services on the OHDSI Forum, as appropriate. You're invited to join us at OHDSI Tutorials and consider giving back by contributing your expertise in the Symposium proceedings and OHDSI face-to-face meetings throughout the year.
+**OHDSIツールスタックへの貢献をしたいと思う生物統計学者または技術開発者**何よりもOHDSI methodライブラリにあなたの専門知識を導入して、このような方法をさらによく開発するためのあなたの情熱に感謝します。まず、人口レベルの推定や、患者レベル予測ワークグループリモート会議に参加して、コミュニティの現在の優先順位についての詳細は、ビューを推薦する。 OHDSIツールを使用して、各GitHub Repoに問題を提起することができる。 （例えば、SQLレンダリングパッケージの問題である場合OHDSI / SqlRenderのGitHub Repoに問題を提起すればよい）あなたの貢献を歓迎する！
 
-**I am a student looking to learn more about OHDSI.** You're in the right place! Consider joining an OHDSI Community Call and introducing yourself. You are encouraged to delve into the OHDSI tutorials, attend OHDSI Symposiums and face-to-face meetings to learn more about the methods and tools the OHDSI community offers. If you have a specific research interest, let us know by posting in the Researcher topic on the OHDSI Forum. Many organizations offer OHDSI sponsored research opportunities (e.g. post-Doc, research fellowships). The OHDSI Forum will give you the latest information on these opportunities and more.
+**OHDSIツールスタックを補完するツール作ることに関心があるソフトウェア開発者**コミュニティへようこそする！ OHDSI任務の一環として、私たちのツールは、オープンソースであり、Apache licensesに基づいて管理される。 OHDSIツールスタックを補完するソリューションの開発を歓迎する。いつでもワークグループに参加してのアイデアを提案していただきたい。ただし、OHDSIはオープンサイエンス（オープン科学）オープンコラボレーションに多くの投資をしていることに注意してください。排他的なアルゴリズムとソフトウェアソリューションも歓迎しますが、そのような作業は、私たちのソフトウェア開発作業での主な関心事ではない。
 
-## Summary
+**OHDSIコミュニティに助言をしたいコンサルタント**コミュニティへようこそ！あなたの専門知識は非常に貴重である。必要に応じてOHDSIフォーラムに適切に本人のサービスを促進してもよい。 OHDSIチュートリアルに参加したい願って、毎年開催されるシンポジウムの手順とOHDSI対面ミーティングであなたの専門知識に貢献することを検討してみよう。
 
-```{block2, type='rmdsummary'}
-- Getting started in the OHDSI Community is as easy as saying hello! Post on the **OHDSI Forum** and join a Community Call.
-- Post your research or ETL questions to the OHDSI Forum.
+**OHDSIについてもっと学びたい学生**正しく見つけてきた！ OHDSIコミュニティリモート会議に参加して、本人を紹介することを考慮してください。 OHDSIチュートリアルを参考にしてOHDSIシンポジウムの対面ミーティングに参加してOHDSIコミュニティが提供する方法とツールについての詳細をご覧ください。もし、特定の研究に興味がある場合OHDSIフォーラムの研究者トピックに文を載せてほしい。さまざまな組織でOHDSIが後援する研究の機会（例えばポスドク、研究フェローシップ）を提供する。 OHDSIフォーラムはこのような機会などに関する最新情報を提供するものである。
+
+## 요약
+
+```{block2, type = 'rmdsummary'}
+- OHDSIコミュニティで始めるのは、挨拶するのと同じくらい簡単です！ **OHDSI フォーラム**に投稿して、コミュニティコールに参加してください。 
+- OHDSIフォーラムに研究またはETLの質問を投稿してください。
+
 
 ```
-
