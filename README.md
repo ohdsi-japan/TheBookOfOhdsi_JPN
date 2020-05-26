@@ -1,13 +1,10 @@
 # TheBookOfOhdsi
 
-[![Build Status](https://travis-ci.org/OHDSI/TheBookOfOhdsi.svg?branch=master)](https://travis-ci.org/OHDSI/TheBookOfOhdsi)
+The Book of OHDSIの日本語翻訳版作成プロジェクトです。
+OHDSI Korea チームのご厚意により、すでに完成した韓国語版をベースにして、英語版の最新版になるべく追従した形で翻訳をすすめています。
 
-The Book of OHDSI repository. These contents are automatically rendered to the online version of the book at [book.ohdsi.org](http://book.ohdsi.org).
+執筆中のオンライン版は、下記から見ることができるようになる予定ですが、まだできていません。
 
-For notes on how to edit the book, see [the OHDSI Wiki](http://www.ohdsi.org/web/wiki/doku.php?id=projects:workgroups:notes_on_writing_text_for_the_book), as well as the [Book of OHDSI Cheat Sheet](https://raw.githubusercontent.com/OHDSI/TheBookOfOhdsi/master/extras/CheatSheet.pdf).
+https://ohdsi-japan.github.io/TheBookOfOhdsiJapan/
 
-Information on meetings of the Book of OHDSI Worgroup can be found on the [Workgroup Wiki](http://www.ohdsi.org/web/wiki/doku.php?id=projects:workgroups:the_book_of_ohdsi).
-
-
-
-
+加筆修正の際には、[the OHDSI Wiki](http://www.ohdsi.org/web/wiki/doku.php?id=projects:workgroups:notes_on_writing_text_for_the_book) と[Book of OHDSI Cheat Sheet](https：//raw.githubusercontent.com/OHDSI/TheBookOfOhdsi/master/extras/CheatSheet.pdf) を確認してください。
