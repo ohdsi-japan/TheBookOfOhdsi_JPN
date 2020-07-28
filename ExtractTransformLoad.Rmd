@@ -1,88 +1,89 @@
-# Extract Transform Load {#ExtractTransformLoad}
+# データの抽出(Extract), 変換(Transform), 取り込み(Load) {#ExtractTransformLoad}
 
 *Chapter leads: Clair Blacketer & Erica Voss*
 
-## Introduction
+## はじめに
 
-In order to get from the native/raw data to the OMOP Common Data Model (CDM) we have to create an extract, transform, and load (ETL) process. This process should restructure the data to the CDM, and add mappings to the Standardized Vocabularies, and is typically implemented as a set of automated scripts, for example SQL scripts. It is important that this ETL process is repeatable, so that it can be rerun whenever the source data is refreshed. \index{ETL|see {extract, transform and load (ETL)}} \index{raw data} \index{native data|see {raw data}} \index{source data|see{raw data}}
+生のデータから OMOP Common Data Model (CDM) に到達するためには、抽出、変換、取り込み (Extract, Transform, Load: ETL) 処理を作成しなければなりません。このプロセスは、データを CDM に再構築し、標準化された用語集へのマッピングを追加するもので、通常は SQL スクリプトなどの自動化されたスクリプトのセットとして実装されます。このETLプロセスは、ソースデータがリフレッシュされたときにいつでも再実行できるように、繰り返し可能であることが重要です。
+\index{ETL|see {extract, transform and load (ETL)}} \index{raw data} \index{native data|see {raw data}} \index{source data|see{raw data}}
 
-Creating an ETL is usually a large undertaking. Over the years, we have developed best practices, consisting of four major steps:
+ETLを作成することは、通常、大規模な作業です。長年にわたり、私たちは4つの主要なステップからなるベストプラクティスを開発してきました。
 
-1. Data experts and CDM experts together design the ETL.
-2. People with medical knowledge create the code mappings.
-3. A technical person implements the ETL.
-4. All are involved in quality control.
+1. データの専門家とCDMの専門家が一緒にETLを設計します。
+2. 医療知識のある人がコードマッピングを作成します。
+3. 技術者がETLを実装します。
+4. 全員で品質管理を行います。
 
-In this chapter we will discuss each of these steps in detail. Several tools have been developed by the OHDSI community to support some of these steps, and these will be discussed as well. We close this chapter with a discussion of CDM and ETL maintenance.
+本章では、これらの各ステップについて詳細に説明します。これらのステップをサポートするために、いくつかのツールが OHDSI コミュニティによって開発されており、これらについても議論します。最後に、CDM と ETL のメンテナンスについての議論を行います。
 
-## Step 1: Design the ETL
+## Step 1: ETLのデザイン
 
-It is important to clearly separate the design of the ETL from the implementation of the ETL. Designing the ETL requires extensive knowledge of both the source data, as well as the CDM. Implementing the ETL on the other hand typically relies mostly on technical expertise on how to make the ETL computationally efficient. If we try to do both at once, we are likely to get stuck in nitty-gritty details, while we should be focusing on the overall picture.
+ETLの設計とETLの実装を明確に分離することが重要です。ETLを設計するには、CDMと元データの両方についての広範な知識が必要とされます。一方、ETLの実装には、通常、ETLを効率の良いものにする方法についての専門的な技術が必要です。私たちが一度に両方を行おうとすると、私たちは全体像に焦点を当てるべきなのに、細かい細部で行き詰ってしまう可能性があります。
 
-Two closely-integrated tools have been developed to support the ETL design process: White Rabbit, and Rabbit-in-a-Hat.
+ETL設計プロセスをサポートするために、密接に統合された2つのツールが開発されました。White RabbitとRabbit-in-a-Hatです。
 
 ### White Rabbit
 
-To initiate an ETL process on a database you need to understand your data, including the tables, fields, and content. This is where the [White Rabbit](https://github.com/OHDSI/WhiteRabbit) tool comes in. White Rabbit is a software tool to help prepare for ETLs of longitudinal healthcare databases into the [OMOP CDM](https://github.com/OHDSI/CommonDataModel). White Rabbit scans your data and creates a report containing all the information necessary to begin designing the ETL. All source code and installation instructions, as well as a link to the manual, are available on GitHub.[^whiteRabbitGithubUrl] \index{White Rabbit} \index{data profiling|see {White Rabbit}}
+ETL処理を開始するには、データベースのテーブル、フィールド、コンテンツを理解する必要があります。そこで、[White Rabbit](https://github.com/OHDSI/WhiteRabbit)ツールの出番です。White Rabbitは、縦断的なヘルスケアデータベースを [OMOP CDM](https://github.com/OHDSI/CommonDataModel) へETLする準備を支援するソフトウェアツールです。White Rabbitは元データをスキャンし、ETLの設計を開始するために必要なすべての情報を含むレポートを作成します。すべてのソースコードとインストール手順、マニュアルへのリンクはGitHubで入手できます。[^whiteRabbitGithubUrl] \index{White Rabbit} \index{data profiling|see {White Rabbit}}
 
 [^whiteRabbitGithubUrl]: https://github.com/OHDSI/WhiteRabbit.
 
-#### Scope and Purpose  {-}
+#### 目的と利用範囲 {-}
 
-White Rabbit’s main function is to perform a scan of the source data, providing detailed information on the tables, fields, and values that appear in a field. The source data can be in comma-separated text files, or in a database (MySQL, SQL Server, Oracle, PostgreSQL, Microsoft APS, Microsoft Access, Amazon RedShift). The scan will generate a report that can be used as a reference when designing the ETL, for instance by using it in conjunction with the Rabbit-In-a-Hat tool. White Rabbit differs from standard data profiling tools in that it attempts to prevent the display of personally identifiable information (PII) data values in the generated output data file.
+White Rabbitの主な機能は、元データのスキャンを実行し、フィールドに現れるテーブル、フィールド、その中に含まれる値の詳細情報を提供することです。元データは、カンマ区切りのテキストファイル、またはデータベース（MySQL、SQL Server、Oracle、PostgreSQL、Microsoft APS、Microsoft Access、Amazon RedShift）が使用できます。スキャン結果から、例えばRabbit-In-a-Hatツールと組み合わせて使用するなど、ETLを設計する際に参考にできるレポートが生成されます。White Rabbitは、生成された出力データファイルに個人を特定できる情報（Personally Identifiable Information, PII）が表示されないようにしようとする点で、標準的なデータプロファイリングツールとは異なります。
 
-#### Process Overview {-}
+#### 処理の流れ {-}
 
-The typical sequence for using the software to scan source data:
+White Rabbitを使用して生データをスキャンする際の典型的な手順は以下のようになります。
 
-1. Set working folder, the location on the local desktop computer where results will be exported.
-2. Connect to the source database or CSV text file and test connection.
-3. Select the tables of interest for the scan and scan the tables.
-4. White Rabbit creates an export of information about the source data.
+1. 手元のデスクトップコンピュータ上の作業フォルダを設定します。ここに結果が格納されます。
+2. 元データベースまたは CSV テキストファイルに接続し、接続をテストします。
+3. スキャンしたいテーブルを選択し、テーブルのスキャンを実行します。
+4. White Rabbitは、元データに関する情報を格納します。
 
-#### Setting a Working Folder {-}
+#### 作業フォルダの設定 {-}
 
-After downloading and installing the White Rabbit application, the first thing you need to do is set a working folder. Any files that White Rabbit creates will be exported to this local folder. Use the "Pick Folder" button shown in Figure \@ref(fig:WhiteRabbitLocation) to navigate in your local environment where you would like the scan document to go. 
+White Rabbitアプリケーションをダウンロードしてインストールしたら、まず最初に作業フォルダを設定します。White Rabbitが作成したファイルは、このフォルダに格納されます。図\@ref(fig:WhiteRabbitLocation) に示す「フォルダを選択」ボタンを使用して、スキャン結果を格納させたい場所を選択します。
 
-```{r WhiteRabbitLocation, fig.cap='The "Pick Folder" button allows the specification of a working folder for the White Rabbit application.',echo=FALSE, out.width='100%', fig.align='center'}
+```{r WhiteRabbitLocation, fig.cap='「フォルダを選ぶ(Pick Folder)」ボタンで、White Rabbitの作業フォルダを指定します',echo=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("images/ExtractTransformLoad/WhiteRabbitLocation.png")
 ```
 
-#### Connection to a Database {-}
+#### データベースへの接続 {-}
 
-White Rabbit supports delimited text files and various database platforms. Hover the mouse over the various fields to get a description of what is required. More detailed information can be found in the manual.
+White Rabbitはテキストファイルや様々なデータベースをサポートしています。マウスをフィールドに合わせると、必要な情報の説明が表示されます。より詳細な情報はマニュアルを参照してください。
 
-#### Scanning the Tables in a Database {-}
+#### データベース中の表のスキャン {-}
 
-After connecting to a database, you can scan the tables contained therein. A scan generates a report containing information on the source data that can be used to help design the ETL. Using the Scan tab shown in Figure \@ref(fig:WhiteRabbitAddTables) you can either select individual tables in the selected source database by clicking on “Add” (Ctrl + mouse click), or automatically select all tables in the database by clicking on “Add all in DB”.
+データベースに接続した後、そこに含まれるテーブルをスキャンすることができます。その結果、ETLの設計に役立つ元データの情報が書かれたレポートが生成されます。図\@ref(fig:WhiteRabbitAddTables)に示す"Scan"タブで、"Add"（Ctrl + クリック）で選択したデータベース内の個々のテーブルを選択するか、"Add all in DB"をクリックしてデータベース内のすべてのテーブルを自動的に選択することができます。
 
 ```{r WhiteRabbitAddTables, fig.cap='White Rabbit Scan tab.', echo=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("images/ExtractTransformLoad/WhiteRabbitAddTables.png")
 ```
 
-There are a few setting options as well with the scan:
+スキャンではいくつかのオプションを設定できます。
 
-* Checking the “Scan field values” tells WhiteRabbit that you would like to investigate which values appear in the columns. 
-* “Min cell count” is an option when scanning field values. By default, this is set to 5, meaning values in the source data that appear less than 5 times will not appear in the report. Individual data sets may have their own rules about what this minimum cell count can be. 
-* “Rows per table” is an option when scanning field values. By default, White Rabbit will scan 100,000 randomly selected rows in the table. 
+* "Scan field values"をチェックすることで、列に含まれる値を調査したいことを WhiteRabbit に伝えます。
+* "Min cell count" は、フィールドの値をスキャンする際のオプションです。デフォルトでは、これは5に設定されています。つまり、元データ中に5回未満しか出現しない値は、レポートには表示されません。それぞれのデータセットごとに、この最小セル数に関するルールを設定できます。
+* "Rows per table"も、フィールドの値をスキャンする際のオプションです。デフォルトでは、White Rabbitはテーブル内のランダムに選択された100,000行をスキャンします。
 
-Once all settings are completed, press the “Scan tables” button. After the scan is completed the report will be written to the working folder.
+すべての設定が完了したら、"Scan tables" ボタンを押してください。スキャンが完了すると、レポートが作業フォルダに書き込まれます。
 
-#### Interpreting the Scan Report {-}
+#### スキャンレポートの解釈 {-}
 
-Once the scan is complete, an Excel file is generated in the selected folder with one tab present for each table scanned as well as an overview tab. The overview tab lists all tables scanned, each field in each table, the data type of each field, the maximum length of the field, the number of rows in the table, the number of rows scanned, and how often each field was found to be empty. Figure \@ref(fig:ScanOverviewTab). shows an example overview tab.
+スキャンが完了すると、選択したフォルダに Excel ファイルが生成されます。このファイルには、概要タブと、スキャンされたテーブルそれぞれにつき 1 つのタブがあります。概要タブには、スキャンされたすべてのテーブル、各テーブル内の各フィールド、各フィールドのデータ型、フィールドの最大長、テーブル内の行数、スキャンされた行数、および空白の値が発見された頻度が一覧表示されます。図\@ref(fig:ScanOverviewTab) に概要タブの例を示します。
 
-```{r ScanOverviewTab, fig.cap="Example overview tab from a scan report.", echo=FALSE, out.width='100%', fig.align='center'}
+```{r ScanOverviewTab, fig.cap="スキャンレポートの例", echo=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("images/ExtractTransformLoad/ScanOverviewTab.png")
 ```
 
-The tabs for each of the tables show each field, the values in each field, and the frequency of each value. Each source table column will generate two columns in the Excel. One column will list all distinct values that have a “Min cell count” greater than what was set at time of the scan. If a list of unique values was truncated, the last value in the list will be “List truncated”; this indicates that there are one or more additional unique source values that appear less than the number entered in the “Min cell count”. Next to each distinct value will be a second column that contains the frequency (the number of times that value occurs in the sample). These two columns (distinct values and frequency) will repeat for all the source columns in the table profiled in the workbook. 
+各テーブルのタブには、フィールドの一覧、各フィールドの値一覧、および各値の出現頻度が表示されます。元データ中のそれぞれの列ごとに、Excelレポートでは2つの列が生成されます。1番目の列には、スキャン時に設定された"Min cell count" 値よりも多い頻度で出現する値がすべてリストアップされます。値のリストが切り詰められた場合、リストの最後の値は "List truncated "と表示されます。これは、"Min cell count"で設定された数よりも少ない頻度で出現した値があったことを示しています。2番目の列には、値の出現頻度（その値がサンプル内で発生した回数）が書かれています。これら2つの列（値の一覧とその頻度）が、元データテーブル中のすべての列のそれぞれについて繰り返されます。
 
-```{r scanSex, fig.cap="Example values for a single column.", echo=FALSE, out.width='30%', fig.align='center'}
+```{r scanSex, fig.cap="列の値一覧の例", echo=FALSE, out.width='30%', fig.align='center'}
 knitr::include_graphics("images/ExtractTransformLoad/ScanSex.png")
 ```
 
-The report is powerful in understanding your source data by highlighting what exists. For example, if the results shown in Figure \@ref(fig:scanSex) were given back on the “Sex” column within one of the tables scanned, we can see that there were two common values (1 and 2) that appeared 61,491 and 35,401 times respectively. White Rabbit will not define 1 as male and 2 as female; the data holder will typically need to define source codes unique to the source system. However, these two values (1 & 2) are not the only values present in the data because we see this list was truncated. These other values appear with very low frequency (defined by “Min cell count”) and often represent incorrect or highly suspicious values. When generating an ETL we should not only plan to handle the high-frequency gender concepts 1 and 2 but the other low-frequency values that exist within this column. For example, if those lower frequency genders were “NULL” we want to make sure the ETL can handle processing that data and knows what to do in that situation. 
+このレポートでは何が存在するかが強調されるので、元データを理解する上で強力です。例えば、スキャンしたテーブルの「Sex」列から図\@ref(fig:scanSex)に示す結果が返った場合、2つの値（1と2）がそれぞれ61,491回と35,401回出現していることがわかります。White Rabbit が、1を男性、2を女性というように定義することはありません。通常、データ保持者がそれぞれのシステムごとに固有のコードリストを定義する必要があります。リストが切り詰められているため、これら2つの値(1と2)はデータに存在するすべての値ではないことがわかります。他の値は非常に低い頻度で（"Min cell count"で定義されています）、多くの場合、不正確な値または非常に疑わしい値を表しています。ETLを作成する際には、高頻度にある性別の1と2だけでなく、列内に存在する他の低頻度の値を処理することも計画する必要があります。例えば、低頻度で性別に "NULL" があった場合にも、ETLがそのデータを処理できることを確認し、その場合に何をすべきかを決めておく必要があります。
 
 ### Rabbit-In-a-Hat
 
