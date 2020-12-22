@@ -110,25 +110,6 @@ OHDSIのオープンサイエンスコミュニティアプローチは、オー
 
 OHDSI は、エビデンスを生み出すためのコラボレーションを強化することを目的としたコミュニティです。では、OHDSI コラボレーターになるとはどういうことでしょうか？もしあなたが OHDSI の使命を信じ、データからエビデンスへの道のりのどこかで貢献したいと考えているのであれば、OHDSI はあなたのためのコミュニティになるでしょう。コラボレーターとは、患者レベルのデータにアクセスできる個人であり、そのデータがエビデンスの生成に利用されるのを見たいと考えている人です。コラボレーターは、科学的なベストプラクティスの確立や代替アプローチの評価に関心のある研究開発者です。共同研究者は、自分のプログラミングスキルを応用して、他のコミュニティで使用できるツールを作成することに関心のあるソフトウェア開発者であることができる。共同研究者は、重要な公衆衛生上の疑問を持ち、その疑問に対するエビデンスを出版やその他の形で広く医療コミュニティに提供しようとしている臨床研究者であってもよい。コラボレーターとは、公衆衛生のためのこの共通の大義を信じ、世界中でのコミュニティ活動や研修会の開催など、コミュニティが自らを維持し、その使命を継続できるように資源を提供したいと願う個人や組織のことです。OHDSI は、分野や利害関係者の違いに関わらず、個人が共通の目的に向かって協力し、それぞれが個々の貢献をすることで、医療の発展に貢献できるような場を目指しています。この旅に参加することに興味がある方は、第 2 章（\@ref(WhereToBegin)「OHDSIはどこから始まるか」）をご覧ください。
 
-## 한국 OHDSI의 역사 <日本の内容に書き換えをお願いいたします>
-OMOP의 창립자 중 한명인 Martijn Schuemie는 OMOP의 연구성과 중 하나로서 관찰형 자료에서 confounding by indication을 찾을 수 있는 LEOPARD 알고리즘을 고안하였고, 2010년 남아프리카 케이프타운에서 열린 세계의료정보학회(IMIA)에서 그 내용을 발표하였다. 당시 세계의료정보학회에 참석하였던 박래웅은 우연히 Martijn Schuemie의 LEOPARD 알고리즘과 OMOP을 접하게 되었고 강한 흥미와 유대감을 느꼈다. 이후 그는 2012년 국내 4개 대학병원의 다기관 임상의료정보 통합시스템 개발을 진행하였고 이를 위해 자체적으로 고안한 CDM을 적용하였다. 2013년 세계약물역학학회(ICPE)가 2013년 9월 캐나타 몬트리올에서 열렸고 이 학회에서 다시 만난 Martijn Schuemie, Patrick Ryan과 박래웅은 각자 진행하던 프로젝트에 대해서 논의하였고 향후 긴밀한 협조를 결의하였다. 이후 그는 빠른시간내에 아주대병원 전자의무기록을 CDM으로 변환완료하고 2014년 OHDSI의 결성을 알리는 콜롬비아대학에서 열린 첫번째 face-to-face 모임에 참여하면서 변환완료된 아주대병원의 CDM과 Achilles 웹페이지를 전격 공개하였다. 미국 이외의 국가에서 변환된 첫번째 CDM이며 전세계에서 첫번째로 공개된 Achilles 페이지였다.
-
-```{r OHDSIf2f2014, fig.cap='2014년 최초 개최된 OHDSI Face to Face 미팅에서 아주대학교병원의 CDM과 Achilles웹페이지를 소개하였다. 사진의 좌측하단에 Christopher Knoll이 아주대 CDM Achilles화면을 살펴보고 있으며 많은 참석자들이 각별한 관심을 보였다.', echo=FALSE, out.width='80%', fig.align='center'}
-knitr::include_graphics("images/OhdsiCommunity/2014f2fmeeting_korea.png")
-```
-
-그는 2014년 6월 이후 본격적으로 한국사회에 OHDSI를 알리기 시작하였고, 이후 국민건강보험공단을 시작으로 가천길병원 등이 OHDSI에 참여하기 시작하였다. 이후 계속 국내외에서 OMOP-CDM, OHDSI 전파를 위해 노력한 결과, 2016년부터는 최초로 국제 OHDSI committee에서 개별 국가를 위한 포럼 [Korean chapter](http://forums.ohdsi.org/c/For-collaborators-wishing-to-communicate-in-Korean) 을 개설하고, 한국의 OHDSI 참여가 본격화 되었다. 첫 한국 국제 OHDSI 심포지엄은 2017년 3월 아주대학교에서 튜토리얼, 리더십 미팅을 포함하여 3일간 개최되었다.
-
-```{r OHDSIInternationalSymposium2017inKorea1, fig.cap='2017년 한국에서의 OHDSI 국제 심포지엄',echo=FALSE, out.width='80%'}
-knitr::include_graphics("images/OhdsiCommunity/DSC01956.png")
-knitr::include_graphics("images/OhdsiCommunity/DSC01861.png")
-```
-
-```{r OHDSIInternationalSymposium2017inKorea2, fig.cap='2017년 한국에서의 OHDSI 국제 심포지엄 튜토리얼',echo=FALSE, out.width='80%'}
-knitr::include_graphics("images/OhdsiCommunity/DSC02166.png")
-```
-한국 OHDSI 네트워크에 참여를 희망하는 병원 관계자들과 함께 2017년 3월 7일 첫 번째 리더십 미팅을 가진 후 현재까지 2달마다 전국의 의과대학/병원을 순회하며 총 15회 이상의 한국 OHDSI 리더십 미팅을 개최하며 OHDSI 전파 및 상호 협력을 꾀하고 있다.
-
 ## まとめ
 
 ```{block2, type='rmdsummary'}
